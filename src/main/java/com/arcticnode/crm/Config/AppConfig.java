@@ -1,6 +1,6 @@
 package com.arcticnode.crm.Config;
 
-import com.arcticnode.crm.Repository.AuthRepository;
+import com.arcticnode.crm.Repository.IAuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class AppConfig {
 
-    private final AuthRepository authRepository;
+    private final IAuthRepository authRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {
