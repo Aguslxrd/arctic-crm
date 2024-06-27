@@ -36,7 +36,7 @@ public class AuthEntity implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
+    public String getUsername() { //username=email
         return email;
     }
 
