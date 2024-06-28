@@ -1,5 +1,6 @@
 package com.arcticnode.crm.Services.Implements;
 
+import com.arcticnode.crm.Dto.AuthRequest;
 import com.arcticnode.crm.Dto.AuthResponse;
 import com.arcticnode.crm.Dto.RegisterRequest;
 import com.arcticnode.crm.Entities.AuthEntity;
@@ -11,7 +12,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements  {
+public class AuthServiceImpl implements IAuthService {
+    @Override
+    public AuthResponse register(RegisterRequest request) {
+        return null;
+    }
+
+    @Override
+    public AuthResponse authenticate(AuthRequest request) {
+        return null;
+    }
     //to - do
 
 }
