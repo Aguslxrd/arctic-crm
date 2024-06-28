@@ -19,6 +19,9 @@ import java.util.Collections;
 @AllArgsConstructor
 public class AuthEntity implements UserDetails {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(unique = true)
     private String email;
     private String passwd;
