@@ -10,7 +10,7 @@ public interface IUserService {
 
     public UserEntity save(UserEntity user);
     @Transactional(readOnly = true)
-    public UserEntity findById(Integer id);
+    public Optional<UserEntity> findById(Integer id);
     @Transactional(readOnly = true)
     public List<UserEntity> findAll();
     public void deleteById(Integer newsId);
