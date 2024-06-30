@@ -21,3 +21,9 @@ CREATE TABLE auth (
     passwd VARCHAR(255),
     userrole enum('ADMIN', 'SUPPORT', 'USER') DEFAULT 'USER'
 );
+
+INSERT INTO users (firstname, secondname, firstlastname, secondlastname, phone, address, email, identifier)
+VALUES 
+('Juan', 'Carlos', 'García', 'López', '555-1234', 'Calle Principal 123, Ciudad', 'juan.garcia@email.com', 'JG12345'),
+('María', NULL, 'Rodríguez', 'Martínez', '555-5678', 'Avenida Central 456, Pueblo', 'maria.rodriguez@email.com', 'MR67890'),
+('Pedro', 'Antonio', 'Sánchez', NULL, '555-9876', 'Plaza Mayor 789, Villa', 'pedro.sanchez@email.com', 'PS13579');

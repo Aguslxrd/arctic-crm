@@ -19,10 +19,10 @@ public class UserEntity {
     private Integer userid;
     private String firstname;
     private String secondname;
-    private String lastname;
+    private String firstlastname;
     private String secondlastname;
     @Column(unique = true)
     private String email;
     private String address;
-    private Integer identifier;
+    private String identifier;
 }
