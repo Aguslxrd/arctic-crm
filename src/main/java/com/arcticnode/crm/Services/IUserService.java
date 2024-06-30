@@ -13,7 +13,7 @@ public interface IUserService {
     public Optional<UserEntity> findById(Integer id);
     @Transactional(readOnly = true)
     public List<UserEntity> findAll();
-    public void deleteById(Integer newsId);
+    public void deleteById(Integer newsId);//cambiar nombre
     public Optional<UserEntity> findByEmail(String email);
     public Optional<UserEntity> findByPhone(String phone);
     public Optional<UserEntity> findByIdentifier(String identifier);
