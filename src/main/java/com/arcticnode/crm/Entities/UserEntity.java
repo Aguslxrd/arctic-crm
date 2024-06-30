@@ -21,6 +21,7 @@ public class UserEntity {
     private String secondname;
     private String firstlastname;
     private String secondlastname;
+    private String phone;
     @Column(unique = true)
     private String email;
     private String address;
