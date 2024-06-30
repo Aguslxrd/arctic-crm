@@ -68,6 +68,14 @@ public class UserController {
         }
     }
 
-    //identifier / phone.
+    @GetMapping("/identifier/{identifier}")
+    public ResponseEntity<Optional<UserEntity>> getUserByIdentifier(@PathVariable String identifier) {
+        try {
+            Optional<UserEntity> user = iUserService.findByIdentifier(identifier);
+            return ResponseEntity.ok(user);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

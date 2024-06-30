@@ -53,5 +53,11 @@ public class UserServiceImpl implements IUserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found with phone: " + phone)));
     }
 
+    @Override
+    public Optional<UserEntity> findByIdentifier(String identifier) {
+        return Optional.ofNullable(iUserRepository.findByIdentifier(identifier)
+                .orElseThrow( () -> new EntityNotFoundException("User not found with identifier: " + identifier)));
+    }
+
 
 }
