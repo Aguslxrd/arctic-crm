@@ -14,8 +14,7 @@ public interface IUserService {
     @Transactional(readOnly = true)
     public List<UserEntity> findAll();
     public void deleteById(Integer newsId);
-
     public Optional<UserEntity> findByEmail(String email);
-
+    public Optional<UserEntity> findByPhone(String phone);
     //find by dni/ci/rut/etc...
 }

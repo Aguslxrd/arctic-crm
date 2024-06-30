@@ -48,10 +48,20 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<Optional<UserEntity>> getUserByEmail(@PathVariable String email) {
         try {
             Optional<UserEntity> user = iUserService.findByEmail(email);
+            return ResponseEntity.ok(user);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/phone/{phone}")
+    public ResponseEntity<Optional<UserEntity>> getUserByPhone(@PathVariable String phone) {
+        try {
+            Optional<UserEntity> user = iUserService.findByPhone(phone);
             return ResponseEntity.ok(user);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
