@@ -10,5 +10,5 @@ public interface IEnterpriseRepository extends JpaRepository<EnterpriseEntity, I
     public Optional<EnterpriseEntity> findByPhone(String phone);
     public Optional<EnterpriseEntity> findByRut(String rut);
     public Optional<EnterpriseEntity> findByName(String name_enterprise);
-
+    public Optional<EnterpriseEntity> findByEmail(String enterprise_email);
 }
