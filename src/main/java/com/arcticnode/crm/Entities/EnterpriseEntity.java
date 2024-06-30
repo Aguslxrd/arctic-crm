@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Table(name = "enterprise")
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,5 +16,11 @@ public class EnterpriseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userid;
+    private Integer enterpriseid;
+    private String name_enterprise;
+    private String rut;
+    private String address;
+    private String phone;
+    private String email;
+    private String web_site;
 }

@@ -33,9 +33,9 @@ CREATE TABLE enterprise (
     enterpriseId INT PRIMARY KEY AUTO_INCREMENT,
     name_enterprise VARCHAR(100) NOT NULL,
     rut VARCHAR(20) NOT NULL,
-    address VARCHAR(255),
-    phone VARCHAR(20),
-    email VARCHAR(100),
+    address VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    email VARCHAR(100) NOT NULL,
     web_site VARCHAR(100)
 );
 
