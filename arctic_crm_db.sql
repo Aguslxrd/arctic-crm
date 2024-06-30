@@ -27,3 +27,35 @@ VALUES
 ('Juan', 'Carlos', 'García', 'López', '555-1234', 'Calle Principal 123, Ciudad', 'juan.garcia@email.com', 'JG12345'),
 ('María', NULL, 'Rodríguez', 'Martínez', '555-5678', 'Avenida Central 456, Pueblo', 'maria.rodriguez@email.com', 'MR67890'),
 ('Pedro', 'Antonio', 'Sánchez', NULL, '555-9876', 'Plaza Mayor 789, Villa', 'pedro.sanchez@email.com', 'PS13579');
+
+
+CREATE TABLE empresas (
+    empresaId INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    nif VARCHAR(20) NOT NULL,
+    direccion VARCHAR(255),
+    telefono VARCHAR(20),
+    email VARCHAR(100),
+    sitio_web VARCHAR(100)
+);
+
+CREATE TABLE usuarios_empresas (
+    userId INT,
+    empresaId INT,
+    PRIMARY KEY (userId, empresaId),
+    FOREIGN KEY (userId) REFERENCES users(userId),
+    FOREIGN KEY (empresaId) REFERENCES empresas(empresaId)
+);
+
+
+INSERT INTO empresas (nombre, nif, direccion, telefono, email, sitio_web)
+VALUES 
+('Empresa A', 'A12345678', 'Calle Comercial 1, Ciudad', '555-1111', 'contacto@empresaa.com', 'www.empresaa.com'),
+('Empresa B', 'B87654321', 'Avenida Industrial 2, Pueblo', '555-2222', 'info@empresab.com', 'www.empresab.com');
+
+
+INSERT INTO usuarios_empresas (userId, empresaId)
+VALUES 
+(1, 1),  
+(1, 2),  
+(2, 2);
