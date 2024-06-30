@@ -3,6 +3,7 @@ package com.arcticnode.crm.Services.Implements;
 import com.arcticnode.crm.Entities.UserEntity;
 import com.arcticnode.crm.Repository.IUserRepository;
 import com.arcticnode.crm.Services.IUserService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,10 @@ public class UserServiceImpl implements IUserService {
 
     }
 
-    @Override //to-do
+    @Override
     public Optional<UserEntity> findByEmail(String email) {
-        return Optional.empty();
+        return Optional.ofNullable(iUserRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email)));
     }
+
 }
