@@ -14,7 +14,7 @@ public interface IEnterpriseRepository extends JpaRepository<EnterpriseEntity, I
     Optional<EnterpriseEntity> findByPhone(String phone);
     Optional<EnterpriseEntity> findByRut(String rut);
 
-    @Query("SELECT e FROM EnterpriseEntity e WHERE e.name_enterprise = :name_enterprise")
+    @Query("SELECT e FROM EnterpriseEntity e WHERE LOWER(e.name_enterprise) LIKE LOWER(CONCAT('%', :name_enterprise, '%'))")
     Optional<EnterpriseEntity> findByName_enterprise(@Param("name_enterprise") String name_enterprise);
 
     Optional<EnterpriseEntity> findByEmail(String email);

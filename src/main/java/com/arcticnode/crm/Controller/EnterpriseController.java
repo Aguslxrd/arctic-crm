@@ -78,5 +78,14 @@ public class EnterpriseController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/name/{enterprisename}")
+    public ResponseEntity<Optional<EnterpriseEntity>> getEnterpriseByName(@PathVariable String enterprisename) {
+        try {
+            Optional<EnterpriseEntity> user = iEnterpriseRepository.findByName_enterprise(enterprisename);
+            return ResponseEntity.ok(user);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }
