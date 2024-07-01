@@ -5,11 +5,15 @@ import com.arcticnode.crm.Entities.UserEntity;
 import com.arcticnode.crm.Repository.IEnterpriseRepository;
 import com.arcticnode.crm.Services.IEnterpriseService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@RequiredArgsConstructor
 public class EnterpriseServiceImpl implements IEnterpriseService {
 
     @Autowired
@@ -55,8 +59,8 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
     }
 
     @Override
-    public Optional<EnterpriseEntity> findByName(String name) {
-        return Optional.ofNullable(iEnterpriseRepository.findByName(name)
+    public Optional<EnterpriseEntity> findByName_enterprise(String name) {
+        return Optional.ofNullable(iEnterpriseRepository.findByName_enterprise(name)
                 .orElseThrow(() -> new EntityNotFoundException("Enterprise not found with name " + name)));
     }
 

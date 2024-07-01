@@ -2,6 +2,7 @@ package com.arcticnode.crm.Services;
 
 import com.arcticnode.crm.Entities.EnterpriseEntity;
 import com.arcticnode.crm.Entities.UserEntity;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -20,6 +21,6 @@ public interface IEnterpriseService {
     @Transactional(readOnly = true)
     public Optional<EnterpriseEntity> findByRut(String rut);
     @Transactional(readOnly = true)
-    public Optional<EnterpriseEntity> findByName(String name);
+    public Optional<EnterpriseEntity> findByName_enterprise(String name);
     public Optional<EnterpriseEntity> findByEmail(String enterprise_email);
 }
