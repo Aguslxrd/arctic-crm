@@ -21,4 +21,5 @@ public interface IEnterpriseService {
     public Optional<EnterpriseEntity> findByRut(String rut);
     @Transactional(readOnly = true)
     public Optional<EnterpriseEntity> findByName(String name);
+    public Optional<EnterpriseEntity> findByEmail(String enterprise_email);
 }
