@@ -1,6 +1,9 @@
 package com.arcticnode.crm.Repository;
 
 import com.arcticnode.crm.Entities.UserEnterpriseEntity;
+import com.arcticnode.crm.Entities.UserEnterpriseId;
+import com.arcticnode.crm.Entities.UserEntity;
+import com.arcticnode.crm.Entities.EnterpriseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,16 +15,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface IUserEnterpriseRepository extends JpaRepository<UserEnterpriseEntity, Integer> {
+public interface IUserEnterpriseRepository extends JpaRepository<UserEnterpriseEntity, UserEnterpriseId> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM UserEnterpriseEntity ue WHERE ue.user.userid = :userId AND ue.enterprise.enterpriseid = :enterpriseId")
+    @Query("DELETE FROM UserEnterpriseEntity ue WHERE ue.id.userId = :userId AND ue.id.enterpriseId = :enterpriseId")
     void deleteByUserIdAndEnterpriseId(@Param("userId") Integer userId, @Param("enterpriseId") Integer enterpriseId);
 
-    List<UserEnterpriseEntity> findByUserId(Integer userId);
+    @Query("SELECT ue FROM UserEnterpriseEntity ue WHERE ue.id.userId = :userId")
+    List<UserEnterpriseEntity> findByUserId(@Param("userId") Integer userId);
 
-    List<UserEnterpriseEntity> findByEnterpriseId(Integer enterpriseId);
+    List<UserEnterpriseEntity> findByUser(UserEntity user);
 
-    Optional<UserEnterpriseEntity> findByUserIdAndEnterpriseId(Integer userId, Integer enterpriseId);
+    List<UserEnterpriseEntity> findByEnterprise(EnterpriseEntity enterprise);
+
+    Optional<UserEnterpriseEntity> findByIdUserIdAndIdEnterpriseId(Integer userId, Integer enterpriseId);
 }

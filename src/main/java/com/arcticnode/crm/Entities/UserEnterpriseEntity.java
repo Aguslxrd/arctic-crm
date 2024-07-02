@@ -14,17 +14,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserEnterpriseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @EmbeddedId
+    private UserEnterpriseId id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userid")
+    @MapsId("userId")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "enterprise_id", referencedColumnName = "enterpriseid")
+    @MapsId("enterpriseId")
+    @JoinColumn(name = "enterpriseId", referencedColumnName = "enterpriseId")
     private EnterpriseEntity enterprise;
-
 }
