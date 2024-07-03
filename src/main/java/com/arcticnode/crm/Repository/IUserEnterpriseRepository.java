@@ -31,4 +31,9 @@ public interface IUserEnterpriseRepository extends JpaRepository<UserEnterpriseE
     List<UserEnterpriseEntity> findByEnterpriseId(@Param("enterpriseId") Integer enterpriseId);
 
     Optional<UserEnterpriseEntity> findByIdUserIdAndIdEnterpriseId(Integer userId, Integer enterpriseId);
+
+    @Transactional
+    @Modifying
+    @Query("INSERT INTO UserEnterpriseEntity (id.userId, id.enterpriseId) VALUES (:userId, :enterpriseId)")
+    void saveUserEnterprise(@Param("userId") Integer userId, @Param("enterpriseId") Integer enterpriseId);
 }

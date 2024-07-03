@@ -17,5 +17,6 @@ public interface IUserEnterpriseService {
     public List<UserEnterpriseEntity> findByEnterpriseId(Integer enterpriseId);
 
     public Optional<UserEnterpriseEntity> findByUserIdAndEnterpriseId(Integer userId, Integer enterpriseId);
+    public void saveUserEnterprise(Integer userId, Integer enterpriseId);
 
 }

@@ -50,4 +50,9 @@ public class UserEnterpriseServiceImpl implements IUserEnterpriseService {
         return Optional.empty();
     }
 
+    @Override
+    public void saveUserEnterprise(Integer userId, Integer enterpriseId) {
+        userEnterpriseRepository.saveUserEnterprise(userId, enterpriseId);
+    }
+
 }
