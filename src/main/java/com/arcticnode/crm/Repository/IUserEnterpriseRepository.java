@@ -27,7 +27,8 @@ public interface IUserEnterpriseRepository extends JpaRepository<UserEnterpriseE
 
     List<UserEnterpriseEntity> findByUser(UserEntity user);
 
-    List<UserEnterpriseEntity> findByEnterprise(EnterpriseEntity enterprise);
+    @Query("SELECT ue FROM UserEnterpriseEntity ue WHERE ue.id.enterpriseId = :enterpriseId")
+    List<UserEnterpriseEntity> findByEnterpriseId(@Param("enterpriseId") Integer enterpriseId);
 
     Optional<UserEnterpriseEntity> findByIdUserIdAndIdEnterpriseId(Integer userId, Integer enterpriseId);
 }

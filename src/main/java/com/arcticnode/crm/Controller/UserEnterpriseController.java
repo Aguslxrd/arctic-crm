@@ -42,6 +42,7 @@ public class UserEnterpriseController {
     @GetMapping("/enterprise/{enterpriseId}")
     public ResponseEntity<List<UserEnterpriseEntity>> getUserEnterprisesByEnterpriseId(@PathVariable Integer enterpriseId) {
         List<UserEnterpriseEntity> userEnterprises = userEnterpriseService.findByEnterpriseId(enterpriseId);
+        log.info(userEnterprises.toString());
         return ResponseEntity.ok(userEnterprises);
     }
 

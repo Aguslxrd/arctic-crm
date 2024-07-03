@@ -41,7 +41,8 @@ public class UserEnterpriseServiceImpl implements IUserEnterpriseService {
 
     @Override
     public List<UserEnterpriseEntity> findByEnterpriseId(Integer enterpriseId) {
-        return null;
+
+        return userEnterpriseRepository.findByEnterpriseId(enterpriseId);
     }
 
     @Override
