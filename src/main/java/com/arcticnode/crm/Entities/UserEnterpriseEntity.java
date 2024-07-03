@@ -17,13 +17,5 @@ public class UserEnterpriseEntity {
     @EmbeddedId
     private UserEnterpriseId id;
 
-    @ManyToOne
-    @MapsId("userId")
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
-    private UserEntity user;
-
-    @ManyToOne
-    @MapsId("enterpriseId")
-    @JoinColumn(name = "enterpriseId", referencedColumnName = "enterpriseId")
-    private EnterpriseEntity enterprise;
 }
+

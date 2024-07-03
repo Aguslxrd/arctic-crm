@@ -1,6 +1,7 @@
 package com.arcticnode.crm.Services.Implements;
 
 import com.arcticnode.crm.Entities.UserEnterpriseEntity;
+import com.arcticnode.crm.Entities.UserEnterpriseId;
 import com.arcticnode.crm.Repository.IUserEnterpriseRepository;
 import com.arcticnode.crm.Services.IUserEnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,8 @@ public class UserEnterpriseServiceImpl implements IUserEnterpriseService {
 
     @Override
     public void saveUserEnterprise(Integer userId, Integer enterpriseId) {
-        userEnterpriseRepository.saveUserEnterprise(userId, enterpriseId);
+        UserEnterpriseEntity userEnterprise = new UserEnterpriseEntity(new UserEnterpriseId(userId, enterpriseId));
+        userEnterpriseRepository.save(userEnterprise);
     }
 
 }

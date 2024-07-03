@@ -1,6 +1,7 @@
 package com.arcticnode.crm.Controller;
 
 import com.arcticnode.crm.Entities.UserEnterpriseEntity;
+import com.arcticnode.crm.Entities.UserEnterpriseId;
 import com.arcticnode.crm.Services.IUserEnterpriseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +23,9 @@ public class UserEnterpriseController {
     private final IUserEnterpriseService userEnterpriseService;
 
     @PostMapping
-    public ResponseEntity<UserEnterpriseEntity> saveUserEnterprise(@RequestBody UserEnterpriseEntity userEnterprise) {
-        UserEnterpriseEntity savedUserEnterprise = userEnterpriseService.saveUserEnterprise(userEnterprise);
-        return new ResponseEntity<>(savedUserEnterprise, HttpStatus.CREATED);
+    public ResponseEntity<Void> assignUserToEnterprise(@RequestBody UserEnterpriseId userEnterpriseId) {
+        userEnterpriseService.saveUserEnterprise(userEnterpriseId.getUserId(), userEnterpriseId.getEnterpriseId());
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{userId}/{enterpriseId}")
