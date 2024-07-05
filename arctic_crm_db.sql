@@ -47,6 +47,24 @@ CREATE TABLE user_enterprise (
     FOREIGN KEY (enterpriseId) REFERENCES enterprise(enterpriseId)
 );
 
+CREATE TABLE casos (
+    casoId INT PRIMARY KEY AUTO_INCREMENT,
+    userId INT NOT NULL,
+    titulo VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('Abierto', 'En Progreso', 'Cerrado') DEFAULT 'Abierto',
+    FOREIGN KEY (userId) REFERENCES users(userId)
+);
+
+INSERT INTO casos (userId, titulo, descripcion, estado)
+VALUES 
+(1, 'Problema con facturación', 'El cliente reporta un error en su última factura.', 'Abierto'),
+(1, 'Solicitud de cambio de dirección', 'El cliente desea actualizar su dirección de envío.', 'En Progreso'),
+(2, 'Consulta sobre producto', 'El cliente tiene preguntas sobre las especificaciones del producto XYZ.', 'Abierto'),
+(3, 'Reembolso pendiente', 'El cliente solicita información sobre el estado de su reembolso.', 'Cerrado'),
+(2, 'Problema técnico con la aplicación', 'La aplicación móvil se cierra inesperadamente al intentar realizar un pago.', 'En Progreso');
+
 
 INSERT INTO enterprise (name_enterprise, rut, address, phone, email, web_site)
 VALUES 
