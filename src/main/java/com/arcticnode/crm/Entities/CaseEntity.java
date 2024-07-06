@@ -19,14 +19,14 @@ public class CaseEntity {
     private String title;
 
     @Column(columnDefinition = "TEXT")
-    private String descriptionCase;
+    private String description_case;
 
     @Column(name = "date_created")
-    private LocalDateTime dateCreated;
+    private LocalDateTime date_created;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "case_status")
-    private CaseStatus caseStatus;
+    private CaseStatus case_status;
 
     @ManyToOne
     @JoinColumn(name = "userId", insertable = false, updatable = false)
