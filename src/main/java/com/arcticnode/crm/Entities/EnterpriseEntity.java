@@ -7,25 +7,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Table(name = "enterprise")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class EnterpriseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userid")
-    private Integer userid;
-    private String firstname;
-    private String secondname;
-    private String firstlastname;
-    private String secondlastname;
-    private String phone;
-
-    @Column(unique = true)
-    private String email;
+    private Integer enterpriseid;
+    private String name_enterprise;
+    private String rut;
     private String address;
-    private String identifier;
+    private String phone;
+    private String email;
+    private String web_site;
 }
