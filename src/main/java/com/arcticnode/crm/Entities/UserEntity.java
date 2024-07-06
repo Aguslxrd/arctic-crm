@@ -16,12 +16,14 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userid")
     private Integer userid;
     private String firstname;
     private String secondname;
     private String firstlastname;
     private String secondlastname;
     private String phone;
+
     @Column(unique = true)
     private String email;
     private String address;
