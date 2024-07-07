@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,4 +24,6 @@ public interface ICaseRepository extends JpaRepository<CaseEntity, Integer> {
                   @Param("descriptionCase") String descriptionCase,
                   @Param("caseStatus") CaseStatus caseStatus);
 
+    @Query("SELECT c FROM CaseEntity c WHERE c.case_status IN :statuses")
+    List<CaseEntity> findByCaseStatusIn(@Param("statuses") List<CaseStatus> statuses);
 }

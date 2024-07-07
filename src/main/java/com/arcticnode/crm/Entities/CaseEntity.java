@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -28,6 +29,7 @@ public class CaseEntity {
     private String description_case;
 
     @Column(name = "date_created")
+    @CreationTimestamp
     private LocalDateTime date_created;
 
     @Enumerated(EnumType.STRING)
