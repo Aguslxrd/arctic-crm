@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface ICaseService {
     public CaseEntity saveCase(CaseEntity caseEntity);
     public List<CaseEntity> findAll();
-    public Optional<CaseEntity> findById();
+    public Optional<CaseEntity> findById(Integer caseId);
 }
