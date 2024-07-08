@@ -17,6 +17,7 @@ CREATE TABLE users (
 
 CREATE TABLE auth (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(25) NOT NULL,
     email VARCHAR(100) UNIQUE,
     passwd VARCHAR(255),
     userrole enum('ADMIN', 'SUPPORT', 'USER') DEFAULT 'USER'
@@ -56,6 +57,24 @@ CREATE TABLE cases (
     case_status ENUM('ABIERTO', 'EN_PROGRESO', 'CERRADO') DEFAULT 'ABIERTO',
     FOREIGN KEY (userId) REFERENCES users(userId)
 );
+
+CREATE TABLE interactions (
+    interactionId INT PRIMARY KEY AUTO_INCREMENT,
+    caseId INT NOT NULL,
+    authId INT NOT NULL,
+    interaction_text TEXT NOT NULL,
+    interaction_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (caseId) REFERENCES cases(caseId),
+    FOREIGN KEY (authId) REFERENCES auth(id)
+);
+
+INSERT INTO interactions (caseId, authId, interaction_text)
+VALUES 
+(6, 1, 'Se ha revisado la factura y se ha encontrado un error en el cálculo del IVA. Se procederá a emitir una factura corregida.'),
+(7, 1, 'Se ha emitido una nueva factura corregida y se ha enviado al cliente por correo electrónico.'),
+(8, 1, 'Se ha actualizado la dirección del cliente en el sistema. Se enviará una confirmación por correo.'),
+(8, 1, 'Se han proporcionado las especificaciones detalladas del producto XYZ al cliente vía correo electrónico.'),
+(9, 1, 'El reembolso ha sido procesado y debería reflejarse en la cuenta del cliente en 3-5 días hábiles.'),
 
 INSERT INTO cases (userId, title, description_case, case_status)
 VALUES 
