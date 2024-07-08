@@ -29,6 +29,7 @@ public class AuthServiceImpl implements IAuthService {
         var user = AuthEntity.builder()
                 .email(request.getEmail())
                 .passwd(passwordEncoder.encode(request.getPasswd()))
+                .adminname(request.getAdminname())
                 .userrole(UserType.USER)
                 .build();
         iAuthRepository.save(user);
@@ -51,7 +52,10 @@ public class AuthServiceImpl implements IAuthService {
             );
             var user = iAuthRepository.findByEmail(request.getEmail()).orElseThrow();
             var jwtToken = jwtService.generateToken(user);
-            return AuthResponse.builder().token(jwtToken).build();
+            return AuthResponse.builder()
+                    .token(jwtToken)
+                    .userId(String.valueOf(user.getId()))
+                    .build();
         } catch (AuthenticationException e) {
             e.printStackTrace();
             throw new RuntimeException("Credenciales inválidas ", e);
