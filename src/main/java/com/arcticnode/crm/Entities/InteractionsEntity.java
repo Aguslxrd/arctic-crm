@@ -23,8 +23,8 @@ public class InteractionsEntity {
     @Column(nullable = false)
     private Integer caseId;
 
-    @Column(nullable = false)
-    private Integer userId;
+    @Column(nullable = false) //user id that makes an interaction on a case
+    private Integer authId;
 
     @Column(columnDefinition = "TEXT")
     private String interaction_text;
