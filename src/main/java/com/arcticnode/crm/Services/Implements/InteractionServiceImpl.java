@@ -24,7 +24,7 @@ public class InteractionServiceImpl implements IInteractionService {
 
     @Override
     public List<InteractionsEntity> findAll() {
-        return null;
+        return iInteractionRepository.findAll();
     }
 
     @Override
