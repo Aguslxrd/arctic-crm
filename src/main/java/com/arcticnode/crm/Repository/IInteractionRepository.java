@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface IInteractionRepository extends JpaRepository<InteractionsEntity, Integer> {
     @Transactional
@@ -17,4 +19,9 @@ public interface IInteractionRepository extends JpaRepository<InteractionsEntity
     public void saveInteraction(@Param("caseId") Integer caseId,
                          @Param("authId") Integer authId,
                          @Param("interactionText") String interactionText);
+
+    @Transactional
+    public List<InteractionsEntity> findByCaseId(Integer caseId);
+
+    //to-do get all interactions by authId
 }

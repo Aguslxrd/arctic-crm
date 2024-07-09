@@ -28,7 +28,8 @@ public class InteractionServiceImpl implements IInteractionService {
     }
 
     @Override
-    public List<InteractionsEntity> findByCaseId() {
-        return null;
+    public List<InteractionsEntity> findByCaseId(Integer caseId) {
+        return iInteractionRepository.findByCaseId(caseId);
     }
+
 }

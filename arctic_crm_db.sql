@@ -74,7 +74,7 @@ VALUES
 (7, 1, 'Se ha emitido una nueva factura corregida y se ha enviado al cliente por correo electrónico.'),
 (8, 1, 'Se ha actualizado la dirección del cliente en el sistema. Se enviará una confirmación por correo.'),
 (8, 1, 'Se han proporcionado las especificaciones detalladas del producto XYZ al cliente vía correo electrónico.'),
-(9, 1, 'El reembolso ha sido procesado y debería reflejarse en la cuenta del cliente en 3-5 días hábiles.'),
+(9, 1, 'El reembolso ha sido procesado y debería reflejarse en la cuenta del cliente en 3-5 días hábiles.');
 
 INSERT INTO cases (userId, title, description_case, case_status)
 VALUES 
