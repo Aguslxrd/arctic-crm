@@ -14,7 +14,7 @@ public interface IInteractionRepository extends JpaRepository<InteractionsEntity
     @Modifying
     @Query("INSERT INTO InteractionsEntity (caseId, authId, interaction_text) " +
             "VALUES (:caseId, :authId, :interactionText)")
-    void saveInteraction(@Param("caseId") Integer caseId,
+    public void saveInteraction(@Param("caseId") Integer caseId,
                          @Param("authId") Integer authId,
                          @Param("interactionText") String interactionText);
 }

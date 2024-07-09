@@ -8,4 +8,5 @@ public interface IInteractionService {
 
     public InteractionsEntity saveInteraction(InteractionsEntity interactionsEntity);
     public List<InteractionsEntity> findAll();
+    public List<InteractionsEntity> findByCaseId();
 }
