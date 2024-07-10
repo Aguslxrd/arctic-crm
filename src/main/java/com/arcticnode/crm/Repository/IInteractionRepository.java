@@ -23,5 +23,5 @@ public interface IInteractionRepository extends JpaRepository<InteractionsEntity
     @Transactional
     public List<InteractionsEntity> findByCaseId(Integer caseId);
 
-    //to-do get all interactions by authId
+    public List<InteractionsEntity> findByAuthId(Integer authId); //authId = interaction user.
 }

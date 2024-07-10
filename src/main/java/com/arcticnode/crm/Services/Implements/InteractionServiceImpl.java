@@ -32,4 +32,8 @@ public class InteractionServiceImpl implements IInteractionService {
         return iInteractionRepository.findByCaseId(caseId);
     }
 
+    @Override
+    public List<InteractionsEntity> findByAuthId(Integer authId){
+        return iInteractionRepository.findByAuthId(authId);
+    }
 }

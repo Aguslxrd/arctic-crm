@@ -35,13 +35,23 @@ public class InteractionController {
         return new ResponseEntity<>(interactions, HttpStatus.OK);
     }
 
-    @GetMapping("/{caseId}")
+    @GetMapping("/case/{caseId}")
     public ResponseEntity<List<InteractionsEntity>> getAllInteractionsByCaseId(@PathVariable Integer caseId){
         List<InteractionsEntity> interactionsByCaseId = iInteractionService.findByCaseId(caseId);
         if (interactionsByCaseId.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(interactionsByCaseId, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/user/{authId}")
+    public ResponseEntity<List<InteractionsEntity>> getAllInteractionsByAuthId(@PathVariable Integer authId){
+        List<InteractionsEntity> interactionsByAuthId = iInteractionService.findByAuthId(authId);
+        if (interactionsByAuthId.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(interactionsByAuthId, HttpStatus.OK);
 
     }
 
