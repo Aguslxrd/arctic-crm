@@ -6,7 +6,7 @@ import com.arcticnode.crm.Dto.RegisterRequest;
 import com.arcticnode.crm.Entities.AuthEntity;
 import com.arcticnode.crm.Entities.UserType;
 import com.arcticnode.crm.Jwt.JwtService;
-import com.arcticnode.crm.Repository.IAuthRepository;
+import com.arcticnode.crm.Repository.Admin.IAuthRepository;
 import com.arcticnode.crm.Services.IAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

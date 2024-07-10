@@ -1,4 +1,4 @@
-package com.arcticnode.crm.Repository;
+package com.arcticnode.crm.Repository.Admin;
 
 import com.arcticnode.crm.Entities.AuthEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
