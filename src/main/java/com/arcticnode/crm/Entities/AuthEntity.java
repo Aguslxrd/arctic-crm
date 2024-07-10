@@ -24,6 +24,8 @@ public class AuthEntity implements UserDetails {
     private Integer id;
     @Column(unique = true)
     private String email;
+    @Column(unique = true, name = "username")
+    private String adminname;
     private String passwd;
     @Enumerated(EnumType.STRING)
     private UserType userrole;

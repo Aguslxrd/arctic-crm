@@ -6,7 +6,7 @@ import com.arcticnode.crm.Dto.RegisterRequest;
 import com.arcticnode.crm.Entities.AuthEntity;
 import com.arcticnode.crm.Entities.UserType;
 import com.arcticnode.crm.Jwt.JwtService;
-import com.arcticnode.crm.Repository.IAuthRepository;
+import com.arcticnode.crm.Repository.Admin.IAuthRepository;
 import com.arcticnode.crm.Services.IAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +29,7 @@ public class AuthServiceImpl implements IAuthService {
         var user = AuthEntity.builder()
                 .email(request.getEmail())
                 .passwd(passwordEncoder.encode(request.getPasswd()))
+                .adminname(request.getAdminname())
                 .userrole(UserType.USER)
                 .build();
         iAuthRepository.save(user);
@@ -51,7 +52,10 @@ public class AuthServiceImpl implements IAuthService {
             );
             var user = iAuthRepository.findByEmail(request.getEmail()).orElseThrow();
             var jwtToken = jwtService.generateToken(user);
-            return AuthResponse.builder().token(jwtToken).build();
+            return AuthResponse.builder()
+                    .token(jwtToken)
+                    .userId(String.valueOf(user.getId()))
+                    .build();
         } catch (AuthenticationException e) {
             e.printStackTrace();
             throw new RuntimeException("Credenciales inválidas ", e);
