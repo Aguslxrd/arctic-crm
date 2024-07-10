@@ -9,5 +9,4 @@ public interface IAuthService {
     public AuthResponse register (RegisterRequest request);
     public AuthResponse authenticate (AuthRequest request);
 
-    public void changeUserRole (String email, UserType userType);
 }
