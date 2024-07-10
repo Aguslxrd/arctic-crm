@@ -1,6 +1,7 @@
 package com.arcticnode.crm.Repository.Admin;
 
 import com.arcticnode.crm.Entities.AuthEntity;
+import com.arcticnode.crm.Entities.UserType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +17,6 @@ public interface IAuthRepository extends JpaRepository<AuthEntity, Integer> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE AuthEntity a SET a.userrole = :newRole WHERE a.email = :email")
-    public void updateUserRole(String email, String newRole);
+    @Query("UPDATE AuthEntity a SET a.userrole = :userType WHERE a.email = :email")
+    public void updateUserRole(String email, UserType userType);
 }

@@ -63,4 +63,10 @@ public class AuthServiceImpl implements IAuthService {
 
     }
 
+    @Override
+    public void changeUserRole(String email, UserType userType) {
+        iAuthRepository.updateUserRole(email, userType);
+
+    }
+
 }
