@@ -15,4 +15,6 @@ public interface IAdminManagementRepository extends JpaRepository<AuthEntity, In
     @Transactional
     @Query("UPDATE AuthEntity a SET a.userrole = :userType WHERE a.email = :email")
     public void updateUserRole(String email, UserType userType);
+
+    
 }

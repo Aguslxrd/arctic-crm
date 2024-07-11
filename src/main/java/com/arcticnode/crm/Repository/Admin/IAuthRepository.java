@@ -15,4 +15,5 @@ public interface IAuthRepository extends JpaRepository<AuthEntity, Integer> {
 
     public Optional<AuthEntity> findByEmail(String email);
 
+
 }
