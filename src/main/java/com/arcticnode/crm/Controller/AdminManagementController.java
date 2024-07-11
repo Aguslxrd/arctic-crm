@@ -65,6 +65,7 @@ public class AdminManagementController {
 
         List<AdminUserDTO> userDTOs = allUsers.stream()
                 .map(user -> AdminUserDTO.builder()
+                        .userId(user.getId())
                         .username(user.getUsername())
                         .email(user.getEmail())
                         .role(String.valueOf(user.getUserrole()))
