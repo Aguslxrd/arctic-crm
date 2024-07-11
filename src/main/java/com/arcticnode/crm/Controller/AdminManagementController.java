@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
@@ -47,9 +49,18 @@ public class AdminManagementController {
         if (userId == 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        
+
         return ResponseEntity.ok().build();
 
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<AuthEntity>> getAllRegisteredUsers(){
+        List<AuthEntity> allUsers = iAdminManagementService.getAllUsers();
+        if (allUsers.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(allUsers);
     }
 
 }

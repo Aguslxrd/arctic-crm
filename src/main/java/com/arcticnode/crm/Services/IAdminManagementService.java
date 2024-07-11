@@ -3,6 +3,7 @@ package com.arcticnode.crm.Services;
 import com.arcticnode.crm.Entities.AuthEntity;
 import com.arcticnode.crm.Entities.UserType;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IAdminManagementService {
@@ -12,4 +13,6 @@ public interface IAdminManagementService {
     public Optional<AuthEntity> findById(Integer userId);
 
     public void deleteById(Integer userId);
+
+    public List<AuthEntity> getAllUsers();
 }

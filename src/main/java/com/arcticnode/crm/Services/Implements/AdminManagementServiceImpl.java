@@ -7,6 +7,7 @@ import com.arcticnode.crm.Services.IAdminManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +30,11 @@ public class AdminManagementServiceImpl implements IAdminManagementService {
     @Override
     public void deleteById(Integer userId) {
         iAdminManagementRepository.deleteById(userId);
+    }
+
+    @Override
+    public List<AuthEntity> getAllUsers() {
+        return iAdminManagementRepository.findAll();
     }
 
 
