@@ -1,5 +1,6 @@
 package com.arcticnode.crm.Controller;
 
+import com.arcticnode.crm.Dto.AdminUserDTO;
 import com.arcticnode.crm.Dto.AuthResponse;
 import com.arcticnode.crm.Dto.RegisterRequest;
 import com.arcticnode.crm.Dto.UserRoleToChange;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -55,12 +57,21 @@ public class AdminManagementController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<AuthEntity>> getAllRegisteredUsers(){
+    public ResponseEntity<List<AdminUserDTO>> getAllRegisteredUsers() {
         List<AuthEntity> allUsers = iAdminManagementService.getAllUsers();
-        if (allUsers.isEmpty()){
+        if (allUsers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(allUsers);
+
+        List<AdminUserDTO> userDTOs = allUsers.stream()
+                .map(user -> AdminUserDTO.builder()
+                        .username(user.getUsername())
+                        .email(user.getEmail())
+                        .role(String.valueOf(user.getUserrole()))
+                        .build())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(userDTOs);
     }
 
 }
