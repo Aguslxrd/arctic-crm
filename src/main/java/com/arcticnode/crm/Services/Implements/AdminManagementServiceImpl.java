@@ -37,5 +37,20 @@ public class AdminManagementServiceImpl implements IAdminManagementService {
         return iAdminManagementRepository.findAll();
     }
 
+    @Override
+    public AuthEntity editUser(AuthEntity userToEdit) {
+        Optional<AuthEntity> existingUserOptional = iAdminManagementRepository.findById(userToEdit.getId());
+
+        if (existingUserOptional.isPresent()) {
+            AuthEntity existingUser = existingUserOptional.get();
+
+            existingUser.setEmail(userToEdit.getEmail());
+            existingUser.setAdminname(userToEdit.getAdminname());
+            existingUser.setUserrole(userToEdit.getUserrole());
+            return iAdminManagementRepository.save(existingUser);
+        } else {
+            throw new RuntimeException("Usuario no encontrado con ID: " + userToEdit.getId());
+        }
+    }
 
 }

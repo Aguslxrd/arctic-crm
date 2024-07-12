@@ -15,4 +15,6 @@ public interface IAdminManagementService {
     public void deleteById(Integer userId);
 
     public List<AuthEntity> getAllUsers();
+
+    public AuthEntity editUser(AuthEntity userToEdit);
 }

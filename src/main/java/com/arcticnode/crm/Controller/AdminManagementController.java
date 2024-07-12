@@ -75,4 +75,16 @@ public class AdminManagementController {
         return ResponseEntity.ok(userDTOs);
     }
 
+    @PatchMapping(value = "/users/edit")
+    public ResponseEntity<AuthEntity> editUser(@RequestBody AuthEntity userToEdit) {
+        try {
+            AuthEntity updatedUser = iAdminManagementService.editUser(userToEdit);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
