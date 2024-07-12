@@ -5,6 +5,7 @@ import com.arcticnode.crm.Entities.UserType;
 import com.arcticnode.crm.Repository.Admin.IAdminManagementRepository;
 import com.arcticnode.crm.Services.IAdminManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,9 @@ public class AdminManagementServiceImpl implements IAdminManagementService {
 
     @Autowired
     private IAdminManagementRepository iAdminManagementRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void changeUserRole(String email, UserType userType) {
@@ -46,6 +50,7 @@ public class AdminManagementServiceImpl implements IAdminManagementService {
 
             existingUser.setEmail(userToEdit.getEmail());
             existingUser.setAdminname(userToEdit.getAdminname());
+            existingUser.setPasswd(passwordEncoder.encode(userToEdit.getPasswd()));
             existingUser.setUserrole(userToEdit.getUserrole());
             return iAdminManagementRepository.save(existingUser);
         } else {
