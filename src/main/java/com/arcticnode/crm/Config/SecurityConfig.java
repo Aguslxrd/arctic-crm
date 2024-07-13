@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth.requestMatchers(publicEndPoints()).permitAll()
-                        .requestMatchers("/api/admin/users").hasRole("ADMIN") //to do admin endpoints
+                        .requestMatchers("/api/admin/**").hasAuthority("ADMIN") //to do admin endpoints
                         .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

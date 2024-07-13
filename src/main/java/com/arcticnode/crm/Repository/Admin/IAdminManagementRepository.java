@@ -8,12 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Repository
-public interface IAuthRepository extends JpaRepository<AuthEntity, Integer> {
+public interface IAdminManagementRepository extends JpaRepository<AuthEntity, Integer> {
 
-    public Optional<AuthEntity> findByEmail(String email);
+    @Modifying
+    @Transactional
+    @Query("UPDATE AuthEntity a SET a.userrole = :userType WHERE a.email = :email")
+    public void updateUserRole(String email, UserType userType);
 
-
+    
 }
