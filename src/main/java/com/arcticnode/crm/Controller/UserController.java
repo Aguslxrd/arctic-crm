@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired
