@@ -71,4 +71,14 @@ public class CaseController {
         return new ResponseEntity<>(cases, HttpStatus.OK);
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<CaseEntity>> getCaseByUserId(@PathVariable Integer userId) {
+        List<CaseEntity> userCases = caseService.findByUserId(userId);
+        if (userCases.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(userCases);
+
+    }
+
 }

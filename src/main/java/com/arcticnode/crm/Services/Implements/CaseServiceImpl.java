@@ -36,6 +36,11 @@ public class CaseServiceImpl implements ICaseService {
     }
 
     @Override
+    public List<CaseEntity> findByUserId(Integer userId) {
+        return iCaseRepository.findByUserId(userId);
+    }
+
+    @Override
     public List<CaseEntity> findByCaseStatusIn(List<CaseStatus> statuses) {
         return iCaseRepository.findByCaseStatusIn(statuses);
     }
