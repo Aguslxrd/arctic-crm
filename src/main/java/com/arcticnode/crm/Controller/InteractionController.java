@@ -1,5 +1,6 @@
 package com.arcticnode.crm.Controller;
 
+import com.arcticnode.crm.Dto.InteractionDto;
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.InteractionsEntity;
 import com.arcticnode.crm.Services.IInteractionService;
@@ -36,13 +37,12 @@ public class InteractionController {
     }
 
     @GetMapping("/case/{caseId}")
-    public ResponseEntity<List<InteractionsEntity>> getAllInteractionsByCaseId(@PathVariable Integer caseId){
-        List<InteractionsEntity> interactionsByCaseId = iInteractionService.findByCaseId(caseId);
-        if (interactionsByCaseId.isEmpty()){
+    public ResponseEntity<List<InteractionDto>> getAllInteractionsByCaseId(@PathVariable Integer caseId) {
+        List<InteractionDto> interactions = iInteractionService.findByCaseId(caseId);
+        if (interactions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(interactionsByCaseId, HttpStatus.OK);
-
+        return new ResponseEntity<>(interactions, HttpStatus.OK);
     }
 
     @GetMapping("/user/{authId}")
