@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +35,11 @@ public class InteractionServiceImpl implements IInteractionService {
     @Override
     public List<InteractionsEntity> findAll() {
         return iInteractionRepository.findAll();
+    }
+
+    @Override
+    public Optional<InteractionsEntity> findById(Integer interactionId) {
+        return iInteractionRepository.findById(interactionId);
     }
 
     @Override

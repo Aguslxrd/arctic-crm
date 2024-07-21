@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/interactions")
@@ -35,6 +36,13 @@ public class InteractionController {
         List<InteractionsEntity> interactions = iInteractionService.findAll();
         return new ResponseEntity<>(interactions, HttpStatus.OK);
     }
+    @GetMapping("/{interactionId}")
+    public ResponseEntity<InteractionsEntity> getInteractionById(@PathVariable Integer interactionId) {
+        return iInteractionService.findById(interactionId)
+                .map(interaction -> ResponseEntity.ok(interaction))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 
     @GetMapping("/case/{caseId}")
     public ResponseEntity<List<InteractionDto>> getAllInteractionsByCaseId(@PathVariable Integer caseId) {
