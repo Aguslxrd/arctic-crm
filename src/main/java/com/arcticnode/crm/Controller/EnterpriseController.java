@@ -88,4 +88,13 @@ public class EnterpriseController {
         }
     }
 
+    @GetMapping("/{enterpriseId}")
+    public ResponseEntity<Optional<EnterpriseEntity>> getEnterpriseById(@PathVariable Integer enterpriseId) {
+        Optional<EnterpriseEntity> user = iEnterpriseRepository.findById(enterpriseId);
+        if (user.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(user);
+    }
+
 }
