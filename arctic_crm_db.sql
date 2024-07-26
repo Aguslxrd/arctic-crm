@@ -12,7 +12,8 @@ CREATE TABLE users (
     phone VARCHAR(20) NOT NULL,
     address VARCHAR(255),
     email VARCHAR(100) UNIQUE,
-    identifier VARCHAR(50) NOT NULL
+    identifier VARCHAR(50) NOT NULL,
+    softDelete tinyint(1) DEFAULT(0)
 );
 
 CREATE TABLE auth (
@@ -37,7 +38,8 @@ CREATE TABLE enterprise (
     address VARCHAR(255) NOT NULL,
     phone VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    web_site VARCHAR(100)
+    web_site VARCHAR(100),
+    softDelete tinyint(1) DEFAULT(0)
 );
 
 CREATE TABLE user_enterprise (
