@@ -25,7 +25,7 @@ public class EnterpriseController {
 
     @GetMapping
     public ResponseEntity<Iterable<EnterpriseEntity>> getAllEnterprises(){
-        return ResponseEntity.ok(iEnterpriseRepository.findAll());
+        return ResponseEntity.ok(iEnterpriseRepository.findAllBySoftDeleteFalse());
     }
 
     @PostMapping
@@ -89,12 +89,11 @@ public class EnterpriseController {
     }
 
     @GetMapping("/{enterpriseId}")
-    public ResponseEntity<Optional<EnterpriseEntity>> getEnterpriseById(@PathVariable Integer enterpriseId) {
-        Optional<EnterpriseEntity> user = iEnterpriseRepository.findById(enterpriseId);
-        if (user.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(user);
+    public ResponseEntity<EnterpriseEntity> getEnterpriseById(@PathVariable Integer enterpriseId) {
+        return iEnterpriseRepository.findById(enterpriseId)
+                .filter(enterprise -> !enterprise.getSoftDelete())
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }
