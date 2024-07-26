@@ -33,6 +33,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public List<UserEntity> findAllBySoftDeleteFalse() {
+        return iUserRepository.findAllBySoftDeleteFalse();
+    }
+
+    @Override
     public void deleteById(Integer userId) {
         iUserRepository.findById(userId);
         if (userId != 0){

@@ -23,8 +23,8 @@ public class UserController {
     private IUserService iUserService;
 
     @GetMapping
-    public ResponseEntity<Iterable<UserEntity>> getAllUsers(){
-        return ResponseEntity.ok(iUserService.findAll());
+    public ResponseEntity<Iterable<UserEntity>> getAllActiveUsers(){
+        return ResponseEntity.ok(iUserService.findAllBySoftDeleteFalse());
     }
 
     @PostMapping
@@ -79,13 +79,13 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Optional<UserEntity>> getUserByIdentifier(@PathVariable Integer userId) {
-        try {
-            Optional<UserEntity> user = iUserService.findById(userId);
-            return ResponseEntity.ok(user);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<UserEntity> getUserByIdentifier(@PathVariable Integer userId) {
+        return iUserService.findById(userId)
+                .filter(user -> !user.getSoftDelete())
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+
 
 }

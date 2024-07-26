@@ -13,7 +13,9 @@ public interface IUserService {
     public Optional<UserEntity> findById(Integer id);
     @Transactional(readOnly = true)
     public List<UserEntity> findAll();
-    public void deleteById(Integer newsId);//cambiar nombre
+    @Transactional(readOnly = true)
+    public List<UserEntity> findAllBySoftDeleteFalse();
+    public void deleteById(Integer userId);
     public Optional<UserEntity> findByEmail(String email);
     public Optional<UserEntity> findByPhone(String phone);
     public Optional<UserEntity> findByIdentifier(String identifier);

@@ -23,9 +23,10 @@ public class UserEntity {
     private String firstlastname;
     private String secondlastname;
     private String phone;
-
     @Column(unique = true)
     private String email;
     private String address;
     private String identifier;
+    @Column(name = "softDelete")
+    private Boolean softDelete = false;
 }
