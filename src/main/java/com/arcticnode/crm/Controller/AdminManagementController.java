@@ -7,10 +7,12 @@ import com.arcticnode.crm.Dto.UserRoleToChange;
 import com.arcticnode.crm.Entities.AuthEntity;
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.LoggingEntity;
+import com.arcticnode.crm.Entities.UserEntity;
 import com.arcticnode.crm.LogUtils.LoggingUtils;
 import com.arcticnode.crm.Services.IAdminManagementService;
 import com.arcticnode.crm.Services.IAuthService;
 import com.arcticnode.crm.Services.ICaseService;
+import com.arcticnode.crm.Services.IUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,8 @@ public class AdminManagementController {
     private LoggingUtils loggingUtils;
     @Autowired
     private ICaseService caseService;
+    @Autowired
+    private IUserService userService;
 
     @PutMapping("/users/changerole")
     public ResponseEntity<AuthEntity> changeUserRole(@RequestBody UserRoleToChange userRoleToChange){
@@ -114,6 +118,15 @@ public class AdminManagementController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(closedCases);
+    }
+
+    @GetMapping("/softdeletedusers")
+    public ResponseEntity<List<UserEntity>> getAllSoftDeletedUsers() {
+        List<UserEntity> softDeletedUsers = userService.findAllSoftDeletedUsers();
+        if (softDeletedUsers.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(softDeletedUsers);
     }
 
 }
