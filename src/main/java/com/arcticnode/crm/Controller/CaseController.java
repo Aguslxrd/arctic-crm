@@ -2,6 +2,7 @@ package com.arcticnode.crm.Controller;
 
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.CaseStatus;
+import com.arcticnode.crm.LogUtils.LoggingUtils;
 import com.arcticnode.crm.Services.ICaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +24,13 @@ public class CaseController {
 
     @Autowired
     private ICaseService caseService;
+    @Autowired
+    private LoggingUtils loggingUtils;
 
     @PostMapping
     public ResponseEntity<CaseEntity> createCase(@RequestBody CaseEntity caseEntity) {
         CaseEntity savedCase = caseService.saveCase(caseEntity);
+        loggingUtils.logAction("Alta de caso", "Se creo el caso con ID: " + caseEntity.getCaseId());
         return new ResponseEntity<>(savedCase, HttpStatus.CREATED);
     }
 
@@ -59,6 +63,7 @@ public class CaseController {
                     }
 
                     CaseEntity updatedCase = caseService.saveCase(existingCase);
+                    loggingUtils.logAction("Modificacion de caso", "Se modifico el caso con ID: " + caseEntity.getCaseId());
                     return new ResponseEntity<>(updatedCase, HttpStatus.OK);
                 })
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
