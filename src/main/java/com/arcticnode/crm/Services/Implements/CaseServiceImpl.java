@@ -45,4 +45,12 @@ public class CaseServiceImpl implements ICaseService {
         return iCaseRepository.findByCaseStatusIn(statuses);
     }
 
+    @Override
+    public Optional<CaseEntity> findOpenOrInProgressCaseById(Integer caseId) {
+        return iCaseRepository.findById(caseId).filter(caseEntity ->
+            caseEntity.getCase_status() == CaseStatus.ABIERTO ||
+            caseEntity.getCase_status() == CaseStatus.EN_PROGRESO
+        );
+    }
+
 }

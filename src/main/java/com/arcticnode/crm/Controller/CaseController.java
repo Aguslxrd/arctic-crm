@@ -71,6 +71,13 @@ public class CaseController {
         return new ResponseEntity<>(cases, HttpStatus.OK);
     }
 
+    @GetMapping("/open-and-in-progress/{caseId}")
+    public ResponseEntity<CaseEntity> getOpenAndInProgressCases(@PathVariable Integer caseId) {
+        return caseService.findOpenOrInProgressCaseById(caseId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<CaseEntity>> getCaseByUserId(@PathVariable Integer userId) {
         List<CaseEntity> userCases = caseService.findByUserId(userId);

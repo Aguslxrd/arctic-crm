@@ -14,4 +14,5 @@ public interface ICaseService {
     public List<CaseEntity> findByUserId(Integer userId);
 
     public List<CaseEntity> findByCaseStatusIn(List<CaseStatus> statuses);
+    Optional<CaseEntity> findOpenOrInProgressCaseById(Integer caseId);
 }
