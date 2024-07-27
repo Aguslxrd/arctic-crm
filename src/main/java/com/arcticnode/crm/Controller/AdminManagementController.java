@@ -5,9 +5,8 @@ import com.arcticnode.crm.Dto.AuthResponse;
 import com.arcticnode.crm.Dto.RegisterRequest;
 import com.arcticnode.crm.Dto.UserRoleToChange;
 import com.arcticnode.crm.Entities.AuthEntity;
+import com.arcticnode.crm.Entities.LoggingEntity;
 import com.arcticnode.crm.LogUtils.LoggingUtils;
-import com.arcticnode.crm.Repository.Admin.IAdminManagementRepository;
-import com.arcticnode.crm.Repository.Admin.IAuthRepository;
 import com.arcticnode.crm.Services.IAdminManagementService;
 import com.arcticnode.crm.Services.IAuthService;
 import lombok.RequiredArgsConstructor;
@@ -92,6 +91,15 @@ public class AdminManagementController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/logs")
+    public ResponseEntity<List<LoggingEntity>> getAllCases() {
+        List<LoggingEntity> logs = loggingUtils.getLogs();
+        if (logs.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(logs);
     }
 
 }
