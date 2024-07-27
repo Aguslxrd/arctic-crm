@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CaseServiceImpl implements ICaseService {
@@ -51,6 +52,13 @@ public class CaseServiceImpl implements ICaseService {
             caseEntity.getCase_status() == CaseStatus.ABIERTO ||
             caseEntity.getCase_status() == CaseStatus.EN_PROGRESO
         );
+    }
+
+    @Override
+    public List<CaseEntity> findAllClosedCases() {
+        return iCaseRepository.findAll().stream().filter(caseEntity ->
+                caseEntity.getCase_status() == CaseStatus.CERRADO)
+                .collect(Collectors.toList());
     }
 
 }

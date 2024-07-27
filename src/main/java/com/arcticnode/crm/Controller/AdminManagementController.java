@@ -5,10 +5,12 @@ import com.arcticnode.crm.Dto.AuthResponse;
 import com.arcticnode.crm.Dto.RegisterRequest;
 import com.arcticnode.crm.Dto.UserRoleToChange;
 import com.arcticnode.crm.Entities.AuthEntity;
+import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.LoggingEntity;
 import com.arcticnode.crm.LogUtils.LoggingUtils;
 import com.arcticnode.crm.Services.IAdminManagementService;
 import com.arcticnode.crm.Services.IAuthService;
+import com.arcticnode.crm.Services.ICaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ public class AdminManagementController {
     private IAuthService authService;
     @Autowired
     private LoggingUtils loggingUtils;
+    @Autowired
+    private ICaseService caseService;
 
     @PutMapping("/users/changerole")
     public ResponseEntity<AuthEntity> changeUserRole(@RequestBody UserRoleToChange userRoleToChange){
@@ -94,12 +98,22 @@ public class AdminManagementController {
     }
 
     @GetMapping("/logs")
-    public ResponseEntity<List<LoggingEntity>> getAllCases() {
+    public ResponseEntity<List<LoggingEntity>> getAllLogs() {
         List<LoggingEntity> logs = loggingUtils.getLogs();
         if (logs.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(logs);
+    }
+
+
+    @GetMapping("/closedcases")
+    public ResponseEntity<List<CaseEntity>> getAllClosedCases() {
+        List<CaseEntity> closedCases = caseService.findAllClosedCases();
+        if (closedCases.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(closedCases);
     }
 
 }
