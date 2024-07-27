@@ -3,6 +3,7 @@ package com.arcticnode.crm.Controller;
 import com.arcticnode.crm.Dto.InteractionDto;
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.InteractionsEntity;
+import com.arcticnode.crm.LogUtils.LoggingUtils;
 import com.arcticnode.crm.Services.IInteractionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +24,14 @@ public class InteractionController {
 
     @Autowired
     private IInteractionService iInteractionService;
+    @Autowired
+    private LoggingUtils loggingUtils;
 
     @PostMapping
     public ResponseEntity<InteractionsEntity> createInteraction(@RequestBody InteractionsEntity interactionsEntity) {
         InteractionsEntity savedInteraction = iInteractionService.saveInteraction(interactionsEntity);
-        log.info("interaction object data {}" + savedInteraction);
+        loggingUtils.logAction("Alta de interaccion", "Se creo una interaccion con ID: " + interactionsEntity.getInteractionId() +
+                " en el caso con id " + interactionsEntity.getCaseId());
         return new ResponseEntity<>(savedInteraction, HttpStatus.CREATED);
     }
 
