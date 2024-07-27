@@ -1,6 +1,9 @@
 package com.arcticnode.crm.Controller;
 
+import com.arcticnode.crm.Config.AppConfig;
 import com.arcticnode.crm.Entities.UserEntity;
+import com.arcticnode.crm.LogUtils.LoggingUtils;
+import com.arcticnode.crm.Services.ILoggingService;
 import com.arcticnode.crm.Services.IUserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,11 @@ public class UserController {
     @Autowired
     private IUserService iUserService;
 
+    @Autowired
+    private ILoggingService loggingService;
+    @Autowired
+    private LoggingUtils logUtils;
+
     @GetMapping
     public ResponseEntity<Iterable<UserEntity>> getAllActiveUsers(){
         return ResponseEntity.ok(iUserService.findAllBySoftDeleteFalse());
@@ -34,6 +42,7 @@ public class UserController {
         }
 
         iUserService.save(user);
+        logUtils.logAction("Creación de usuario", "Se creó el usuario con ID: " + user.getUserid());
         return ResponseEntity.ok().build();
     }
 
@@ -45,6 +54,7 @@ public class UserController {
         }
 
         iUserService.softDeleteById(userId);
+        logUtils.logAction("Baja de usuario", "Se elimino el usuario con ID: " + userId);
         return ResponseEntity.ok().build();
     }
 
