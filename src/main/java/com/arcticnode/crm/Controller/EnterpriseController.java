@@ -2,6 +2,7 @@ package com.arcticnode.crm.Controller;
 
 import com.arcticnode.crm.Entities.EnterpriseEntity;
 import com.arcticnode.crm.Entities.UserEntity;
+import com.arcticnode.crm.LogUtils.LoggingUtils;
 import com.arcticnode.crm.Repository.IEnterpriseRepository;
 import com.arcticnode.crm.Services.IEnterpriseService;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +24,8 @@ public class EnterpriseController {
 
     @Autowired
     private IEnterpriseService iEnterpriseService;
+    @Autowired
+    private LoggingUtils loggingUtils;
 
     @GetMapping
     public ResponseEntity<Iterable<EnterpriseEntity>> getAllEnterprises(){
@@ -36,6 +39,7 @@ public class EnterpriseController {
         }
 
         iEnterpriseService.save(enterprise);
+        loggingUtils.logAction("Alta de empresa", "Se creo la empresa " + enterprise.getName_enterprise() + " con ID: " + enterprise.getEnterpriseid());
         return ResponseEntity.ok().build();
     }
 
@@ -47,6 +51,7 @@ public class EnterpriseController {
         }
 
         iEnterpriseService.softDeleteById(enterpriseId);
+        loggingUtils.logAction("Baja de empresa", "Se elimino la empresa con ID: " + enterpriseId);
         return ResponseEntity.ok().build();
     }
 
