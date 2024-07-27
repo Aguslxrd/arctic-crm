@@ -16,6 +16,7 @@ public interface IUserService {
     @Transactional(readOnly = true)
     public List<UserEntity> findAllBySoftDeleteFalse();
     public void deleteById(Integer userId);
+    public void softDeleteById(Integer userId);
     public Optional<UserEntity> findByEmail(String email);
     public Optional<UserEntity> findByPhone(String phone);
     public Optional<UserEntity> findByIdentifier(String identifier);

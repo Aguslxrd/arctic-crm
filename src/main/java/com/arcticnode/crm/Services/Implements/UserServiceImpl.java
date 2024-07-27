@@ -47,6 +47,14 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public void softDeleteById(Integer userId) {
+        iUserRepository.findById(userId).ifPresent(user -> {
+            user.setSoftDelete(true);
+            iUserRepository.save(user);
+        });
+    }
+
+    @Override
     public Optional<UserEntity> findByEmail(String email) {
         return Optional.ofNullable(iUserRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email)));

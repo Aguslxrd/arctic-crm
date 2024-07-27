@@ -38,13 +38,13 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<UserEntity> deleteUser(@PathVariable Integer userId){
+    public ResponseEntity<UserEntity> softDeleteUser(@PathVariable Integer userId){
 
         if (iUserService.findById(userId).isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        iUserService.deleteById(userId);
+        iUserService.softDeleteById(userId);
         return ResponseEntity.ok().build();
     }
 
