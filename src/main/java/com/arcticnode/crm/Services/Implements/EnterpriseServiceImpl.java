@@ -46,6 +46,14 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
     }
 
     @Override
+    public void softDeleteById(Integer enterpriseId) {
+        iEnterpriseRepository.findById(enterpriseId).ifPresent(enterprise -> {
+            enterprise.setSoftDelete(true);
+            iEnterpriseRepository.save(enterprise);
+        });
+    }
+
+    @Override
     public Optional<EnterpriseEntity> findByEmail(String enterprise_email) {
         return Optional.ofNullable(iEnterpriseRepository.findByEmail(enterprise_email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + enterprise_email)));

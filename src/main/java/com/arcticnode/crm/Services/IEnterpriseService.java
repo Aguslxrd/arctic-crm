@@ -18,6 +18,7 @@ public interface IEnterpriseService {
     @Transactional(readOnly = true)
     public List<EnterpriseEntity> findAllBySoftDeleteFalse();
     public void deleteById(Integer enterpriseId);
+    public void softDeleteById(Integer enterpriseId);
     @Transactional(readOnly = true)
     public Optional<EnterpriseEntity> findByPhone(String phone);
     @Transactional(readOnly = true)
