@@ -31,7 +31,7 @@ public class AuthServiceImpl implements IAuthService {
         var user = AuthEntity.builder()
                 .email(request.getEmail())
                 .passwd(passwordEncoder.encode(request.getPasswd()))
-                .adminname(request.getAdminname())
+                .adminName(request.getAdminname())
                 .userrole(UserType.USER)
                 .build();
         iAuthRepository.save(user);

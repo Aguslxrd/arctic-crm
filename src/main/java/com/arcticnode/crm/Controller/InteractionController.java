@@ -1,7 +1,9 @@
 package com.arcticnode.crm.Controller;
 
+import com.arcticnode.crm.Dto.InteractionDto;
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.InteractionsEntity;
+import com.arcticnode.crm.LogUtils.LoggingUtils;
 import com.arcticnode.crm.Services.IInteractionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/interactions")
@@ -21,11 +24,14 @@ public class InteractionController {
 
     @Autowired
     private IInteractionService iInteractionService;
+    @Autowired
+    private LoggingUtils loggingUtils;
 
     @PostMapping
     public ResponseEntity<InteractionsEntity> createInteraction(@RequestBody InteractionsEntity interactionsEntity) {
         InteractionsEntity savedInteraction = iInteractionService.saveInteraction(interactionsEntity);
-        log.info("interaction object data {}" + savedInteraction);
+        loggingUtils.logAction("Alta de interaccion", "Se creo una interaccion con ID: " + interactionsEntity.getInteractionId() +
+                " en el caso con id " + interactionsEntity.getCaseId());
         return new ResponseEntity<>(savedInteraction, HttpStatus.CREATED);
     }
 
@@ -34,15 +40,21 @@ public class InteractionController {
         List<InteractionsEntity> interactions = iInteractionService.findAll();
         return new ResponseEntity<>(interactions, HttpStatus.OK);
     }
+    @GetMapping("/{interactionId}")
+    public ResponseEntity<InteractionsEntity> getInteractionById(@PathVariable Integer interactionId) {
+        return iInteractionService.findById(interactionId)
+                .map(interaction -> ResponseEntity.ok(interaction))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 
     @GetMapping("/case/{caseId}")
-    public ResponseEntity<List<InteractionsEntity>> getAllInteractionsByCaseId(@PathVariable Integer caseId){
-        List<InteractionsEntity> interactionsByCaseId = iInteractionService.findByCaseId(caseId);
-        if (interactionsByCaseId.isEmpty()){
+    public ResponseEntity<List<InteractionDto>> getAllInteractionsByCaseId(@PathVariable Integer caseId) {
+        List<InteractionDto> interactions = iInteractionService.findByCaseId(caseId);
+        if (interactions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(interactionsByCaseId, HttpStatus.OK);
-
+        return new ResponseEntity<>(interactions, HttpStatus.OK);
     }
 
     @GetMapping("/user/{authId}")

@@ -23,4 +23,6 @@ public class EnterpriseEntity {
     private String phone;
     private String email;
     private String web_site;
+    @Column(name = "softDelete")
+    private Boolean softDelete = false;
 }

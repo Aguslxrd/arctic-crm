@@ -2,6 +2,7 @@ package com.arcticnode.crm.Controller;
 
 import com.arcticnode.crm.Entities.UserEnterpriseEntity;
 import com.arcticnode.crm.Entities.UserEnterpriseId;
+import com.arcticnode.crm.LogUtils.LoggingUtils;
 import com.arcticnode.crm.Services.IUserEnterpriseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,18 +20,24 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @CrossOrigin("http://localhost:4200")
 public class UserEnterpriseController {
-
-    private final IUserEnterpriseService userEnterpriseService;
+    @Autowired
+    private IUserEnterpriseService userEnterpriseService;
+    @Autowired
+    private LoggingUtils loggingUtils;
 
     @PostMapping
     public ResponseEntity<Void> assignUserToEnterprise(@RequestBody UserEnterpriseId userEnterpriseId) {
         userEnterpriseService.saveUserEnterprise(userEnterpriseId.getUserId(), userEnterpriseId.getEnterpriseId());
+        loggingUtils.logAction("Asignacion de empresa", "Se asigno empresa con ID: " + userEnterpriseId.getEnterpriseId() +
+                " al usuario con ID: " + userEnterpriseId.getUserId());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{userId}/{enterpriseId}")
     public ResponseEntity<Void> deleteUserEnterprise(@PathVariable Integer userId, @PathVariable Integer enterpriseId) {
         userEnterpriseService.deleteUserEnterprise(userId, enterpriseId);
+        loggingUtils.logAction("Desvinculacion de empresa", "Se removio usuario con ID: " + userId +
+                " de la empresa con ID: " + enterpriseId);
         return ResponseEntity.noContent().build();
     }
 

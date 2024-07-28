@@ -26,4 +26,6 @@ public interface ICaseRepository extends JpaRepository<CaseEntity, Integer> {
 
     @Query("SELECT c FROM CaseEntity c WHERE c.case_status IN :statuses")
     List<CaseEntity> findByCaseStatusIn(@Param("statuses") List<CaseStatus> statuses);
+
+    List<CaseEntity> findByUserId(Integer userId);
 }

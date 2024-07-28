@@ -2,6 +2,7 @@ package com.arcticnode.crm.Controller;
 
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.CaseStatus;
+import com.arcticnode.crm.LogUtils.LoggingUtils;
 import com.arcticnode.crm.Services.ICaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +24,13 @@ public class CaseController {
 
     @Autowired
     private ICaseService caseService;
+    @Autowired
+    private LoggingUtils loggingUtils;
 
     @PostMapping
     public ResponseEntity<CaseEntity> createCase(@RequestBody CaseEntity caseEntity) {
         CaseEntity savedCase = caseService.saveCase(caseEntity);
+        loggingUtils.logAction("Alta de caso", "Se creo el caso con ID: " + caseEntity.getCaseId());
         return new ResponseEntity<>(savedCase, HttpStatus.CREATED);
     }
 
@@ -59,6 +63,7 @@ public class CaseController {
                     }
 
                     CaseEntity updatedCase = caseService.saveCase(existingCase);
+                    loggingUtils.logAction("Modificacion de caso", "Se modifico el caso con ID: " + caseEntity.getCaseId());
                     return new ResponseEntity<>(updatedCase, HttpStatus.OK);
                 })
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -69,6 +74,23 @@ public class CaseController {
         List<CaseStatus> statuses = Arrays.asList(CaseStatus.ABIERTO, CaseStatus.EN_PROGRESO);
         List<CaseEntity> cases = caseService.findByCaseStatusIn(statuses);
         return new ResponseEntity<>(cases, HttpStatus.OK);
+    }
+
+    @GetMapping("/open-and-in-progress/{caseId}")
+    public ResponseEntity<CaseEntity> getOpenAndInProgressCases(@PathVariable Integer caseId) {
+        return caseService.findOpenOrInProgressCaseById(caseId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<CaseEntity>> getCaseByUserId(@PathVariable Integer userId) {
+        List<CaseEntity> userCases = caseService.findByUserId(userId);
+        if (userCases.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(userCases);
+
     }
 
 }

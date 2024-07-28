@@ -1,6 +1,9 @@
 package com.arcticnode.crm.Controller;
 
+import com.arcticnode.crm.Config.AppConfig;
 import com.arcticnode.crm.Entities.UserEntity;
+import com.arcticnode.crm.LogUtils.LoggingUtils;
+import com.arcticnode.crm.Services.ILoggingService;
 import com.arcticnode.crm.Services.IUserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +19,20 @@ import java.util.Optional;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired
     private IUserService iUserService;
 
+    @Autowired
+    private ILoggingService loggingService;
+    @Autowired
+    private LoggingUtils logUtils;
+
     @GetMapping
-    public ResponseEntity<Iterable<UserEntity>> getAllUsers(){
-        return ResponseEntity.ok(iUserService.findAll());
+    public ResponseEntity<Iterable<UserEntity>> getAllActiveUsers(){
+        return ResponseEntity.ok(iUserService.findAllBySoftDeleteFalse());
     }
 
     @PostMapping
@@ -34,17 +42,19 @@ public class UserController {
         }
 
         iUserService.save(user);
+        logUtils.logAction("Creación de usuario", "Se creó el usuario con ID: " + user.getUserid());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<UserEntity> deleteUser(@PathVariable Integer userId){
+    public ResponseEntity<UserEntity> softDeleteUser(@PathVariable Integer userId){
 
         if (iUserService.findById(userId).isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        iUserService.deleteById(userId);
+        iUserService.softDeleteById(userId);
+        logUtils.logAction("Baja de usuario", "Se elimino el usuario con ID: " + userId);
         return ResponseEntity.ok().build();
     }
 
@@ -77,5 +87,15 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserEntity> getUserByIdentifier(@PathVariable Integer userId) {
+        return iUserService.findById(userId)
+                .filter(user -> !user.getSoftDelete())
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
 
 }

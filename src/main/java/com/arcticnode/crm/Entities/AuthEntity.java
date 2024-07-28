@@ -1,10 +1,7 @@
 package com.arcticnode.crm.Entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -24,8 +21,9 @@ public class AuthEntity implements UserDetails {
     private Integer id;
     @Column(unique = true)
     private String email;
+    @Getter
     @Column(unique = true, name = "username")
-    private String adminname;
+    private String adminName;
     private String passwd;
     @Enumerated(EnumType.STRING)
     private UserType userrole;

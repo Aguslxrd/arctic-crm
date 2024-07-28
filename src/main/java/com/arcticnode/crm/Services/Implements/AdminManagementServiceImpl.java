@@ -49,7 +49,7 @@ public class AdminManagementServiceImpl implements IAdminManagementService {
             AuthEntity existingUser = existingUserOptional.get();
 
             existingUser.setEmail(userToEdit.getEmail());
-            existingUser.setAdminname(userToEdit.getAdminname());
+            existingUser.setAdminName(userToEdit.getAdminName());
             existingUser.setPasswd(passwordEncoder.encode(userToEdit.getPasswd()));
             existingUser.setUserrole(userToEdit.getUserrole());
             return iAdminManagementRepository.save(existingUser);
