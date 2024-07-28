@@ -53,7 +53,7 @@ public class UserEnterpriseServiceImpl implements IUserEnterpriseService {
 
     @Override
     public void saveUserEnterprise(Integer userId, Integer enterpriseId) {
-        UserEnterpriseEntity userEnterprise = new UserEnterpriseEntity(new UserEnterpriseId(userId, enterpriseId));
+        UserEnterpriseEntity userEnterprise = new UserEnterpriseEntity(userId, enterpriseId);
         userEnterpriseRepository.save(userEnterprise);
     }
 
