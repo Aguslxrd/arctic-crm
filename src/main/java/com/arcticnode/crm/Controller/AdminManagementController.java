@@ -58,6 +58,7 @@ public class AdminManagementController {
         }
 
         loggingUtils.logAction("Nuevo usuario de administracion", "se creo usuario de administracion : " + request.getAdminname());
+        authService.register(request);
         return ResponseEntity.ok().build();
     }
 
