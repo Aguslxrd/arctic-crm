@@ -32,11 +32,11 @@ public class AuthServiceImpl implements IAuthService {
                 .email(request.getEmail())
                 .passwd(passwordEncoder.encode(request.getPasswd()))
                 .adminName(request.getAdminname())
-                .userrole(UserType.USER)
+                .userrole(request.getAdminRole())
                 .build();
         iAuthRepository.save(user);
 
-        System.out.println("Usuario registrado: " + user);
+        System.out.println("Usuario registrado: " + user.getAdminName() + " con rol: " + user.getUserrole());
 
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder().token(jwtToken).build();

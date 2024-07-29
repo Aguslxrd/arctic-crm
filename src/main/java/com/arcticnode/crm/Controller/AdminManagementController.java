@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
-@Slf4j
 @CrossOrigin("http://localhost:4200")
 public class AdminManagementController {
 
@@ -54,9 +53,12 @@ public class AdminManagementController {
     @PostMapping(value = "/users/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
 
-        log.info("register request {}", request);
+        if (request == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         loggingUtils.logAction("Nuevo usuario de administracion", "se creo usuario de administracion : " + request.getAdminname());
-        return ResponseEntity.ok(authService.register(request));
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/users/{userId}")
