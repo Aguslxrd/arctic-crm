@@ -38,7 +38,11 @@ public class CaseServiceImpl implements ICaseService {
 
     @Override
     public List<CaseEntity> findByUserId(Integer userId) {
-        return iCaseRepository.findByUserId(userId);
+
+        return iCaseRepository.findByUserId(userId).stream().filter(caseEntity ->
+                caseEntity.getCase_status() == CaseStatus.ABIERTO ||
+                caseEntity.getCase_status() == CaseStatus.EN_PROGRESO)
+                .collect(Collectors.toList());
     }
 
     @Override
