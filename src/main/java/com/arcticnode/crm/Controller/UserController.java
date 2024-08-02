@@ -96,6 +96,9 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
+    @GetMapping("/all")
+    public ResponseEntity<Long> countAllUsers() {
+        return ResponseEntity.ok(iUserService.countAllUsers());
+    }
 
 }

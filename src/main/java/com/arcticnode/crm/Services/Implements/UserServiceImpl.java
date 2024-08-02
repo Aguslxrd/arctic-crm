@@ -81,5 +81,12 @@ public class UserServiceImpl implements IUserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Long countAllUsers() {
+        return iUserRepository.findAll().stream()
+                .filter(user -> user.getSoftDelete() == Boolean.FALSE)
+                .count();
+    }
+
 
 }

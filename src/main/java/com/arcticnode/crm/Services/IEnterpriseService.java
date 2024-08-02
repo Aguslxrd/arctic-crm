@@ -26,4 +26,5 @@ public interface IEnterpriseService {
     @Transactional(readOnly = true)
     public Optional<EnterpriseEntity> findByName_enterprise(String name);
     public Optional<EnterpriseEntity> findByEmail(String enterprise_email);
+    public Long countAllEnterprises();
 }

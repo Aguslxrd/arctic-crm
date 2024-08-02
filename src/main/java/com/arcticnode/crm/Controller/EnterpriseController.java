@@ -102,4 +102,9 @@ public class EnterpriseController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<Long> getEnterpriseByEmail() {
+        return ResponseEntity.ok(iEnterpriseService.countAllEnterprises());
+    }
+
 }

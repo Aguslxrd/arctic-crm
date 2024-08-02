@@ -1,5 +1,6 @@
 package com.arcticnode.crm.Services.Implements;
 
+import com.arcticnode.crm.Entities.CaseStatus;
 import com.arcticnode.crm.Entities.EnterpriseEntity;
 import com.arcticnode.crm.Entities.UserEntity;
 import com.arcticnode.crm.Repository.IEnterpriseRepository;
@@ -57,6 +58,13 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
     public Optional<EnterpriseEntity> findByEmail(String enterprise_email) {
         return Optional.ofNullable(iEnterpriseRepository.findByEmail(enterprise_email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + enterprise_email)));
+    }
+
+    @Override
+    public Long countAllEnterprises() {
+        return iEnterpriseRepository.findAll().stream()
+                .filter(enterprise -> enterprise.getSoftDelete() == Boolean.FALSE)
+                .count();
     }
 
     @Override
