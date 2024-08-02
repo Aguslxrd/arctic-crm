@@ -65,4 +65,23 @@ public class CaseServiceImpl implements ICaseService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public long countAllCases() {
+        return iCaseRepository.count();
+    }
+
+    @Override
+    public long countAllOpenedCases() {
+        return iCaseRepository.findAll().stream()
+                .filter(caseEntity -> caseEntity.getCase_status() == CaseStatus.ABIERTO)
+                .count();
+    }
+
+    @Override
+    public long countAllInProgressCases() {
+        return iCaseRepository.findAll().stream()
+                .filter(caseEntity -> caseEntity.getCase_status() == CaseStatus.EN_PROGRESO)
+                .count();
+    }
+
 }

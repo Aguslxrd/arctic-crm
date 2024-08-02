@@ -93,4 +93,19 @@ public class CaseController {
 
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<Long> countAllCases() {
+        return ResponseEntity.ok(caseService.countAllCases());
+    }
+
+    @GetMapping("/all/opened")
+    public ResponseEntity<Long> countOpenedCases() {
+        return ResponseEntity.ok(caseService.countAllOpenedCases());
+    }
+
+    @GetMapping("/all/inprogress")
+    public ResponseEntity<Long> countInProgressCases() {
+        return ResponseEntity.ok(caseService.countAllInProgressCases());
+    }
+
 }
