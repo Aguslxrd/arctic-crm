@@ -67,7 +67,11 @@ public class CaseServiceImpl implements ICaseService {
 
     @Override
     public long countAllCases() {
-        return iCaseRepository.count();
+        return iCaseRepository.findAll().stream()
+                .filter(caseEntity ->
+                        caseEntity.getCase_status() == CaseStatus.ABIERTO ||
+                        caseEntity.getCase_status() == CaseStatus.EN_PROGRESO)
+                .count();
     }
 
     @Override
