@@ -73,6 +73,19 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
     }
 
     @Override
+    public Optional<EnterpriseEntity> activateEnterpriseById(Integer enterpriseId) {
+        Optional<EnterpriseEntity> enterpriseOptional = iEnterpriseRepository.findById(enterpriseId);
+
+        if (enterpriseOptional.isPresent()) {
+            EnterpriseEntity enterprise = enterpriseOptional.get();
+            enterprise.setSoftDelete(false);
+            return Optional.of(iEnterpriseRepository.save(enterprise));
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<EnterpriseEntity> findByPhone(String phone) {
         return Optional.ofNullable(iEnterpriseRepository.findByPhone(phone)
                 .orElseThrow(() -> new EntityNotFoundException("Enterprise not found with phone: " + phone)));

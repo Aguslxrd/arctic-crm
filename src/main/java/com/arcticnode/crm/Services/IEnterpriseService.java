@@ -29,4 +29,5 @@ public interface IEnterpriseService {
     public Optional<EnterpriseEntity> findByName_enterprise(String name);
     public Optional<EnterpriseEntity> findByEmail(String enterprise_email);
     public Long countAllEnterprises();
+    public Optional<EnterpriseEntity> activateEnterpriseById(Integer enterpriseId);
 }

@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -137,6 +138,18 @@ public class AdminManagementController {
         }
 
         return ResponseEntity.ok(softDeletedEnterprises);
+    }
+
+    @PutMapping("/enterprises/activate/{enterpriseId}")
+    public ResponseEntity<EnterpriseEntity> activateEnterprise(@PathVariable Integer enterpriseId) {
+        Optional<EnterpriseEntity> activatedEnterprise = enterpriseService.activateEnterpriseById(enterpriseId);
+
+        if (activatedEnterprise.isPresent()) {
+            loggingUtils.logAction("Reactivación de empresa", "Se reactivó la empresa con ID: " + enterpriseId);
+            return ResponseEntity.ok(activatedEnterprise.get());
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
