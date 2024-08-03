@@ -17,6 +17,8 @@ public interface IEnterpriseService {
     public List<EnterpriseEntity> findAll();
     @Transactional(readOnly = true)
     public List<EnterpriseEntity> findAllBySoftDeleteFalse();
+    @Transactional(readOnly = true)
+    public List<EnterpriseEntity> findAllBySoftDeleteTrue();
     public void deleteById(Integer enterpriseId);
     public void softDeleteById(Integer enterpriseId);
     @Transactional(readOnly = true)

@@ -20,4 +20,5 @@ public interface IEnterpriseRepository extends JpaRepository<EnterpriseEntity, I
 
     Optional<EnterpriseEntity> findByEmail(String email);
     public List<EnterpriseEntity> findAllBySoftDeleteFalse();
+    public List<EnterpriseEntity> findAllBySoftDeleteTrue();
 }

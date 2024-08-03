@@ -40,6 +40,11 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
     }
 
     @Override
+    public List<EnterpriseEntity> findAllBySoftDeleteTrue() {
+        return iEnterpriseRepository.findAllBySoftDeleteTrue();
+    }
+
+    @Override
     public void deleteById(Integer enterpriseId) {
         if (enterpriseId != 0){
             iEnterpriseRepository.deleteById(enterpriseId);
