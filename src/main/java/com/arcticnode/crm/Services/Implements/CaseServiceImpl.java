@@ -5,6 +5,8 @@ import com.arcticnode.crm.Entities.CaseStatus;
 import com.arcticnode.crm.Repository.ICaseRepository;
 import com.arcticnode.crm.Services.ICaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -45,9 +47,8 @@ public class CaseServiceImpl implements ICaseService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<CaseEntity> findByCaseStatusIn(List<CaseStatus> statuses) {
-        return iCaseRepository.findByCaseStatusIn(statuses);
+    public Page<CaseEntity> findByCaseStatusIn(List<CaseStatus> statuses, Pageable pageable) {
+        return iCaseRepository.findByCaseStatusIn(statuses, pageable);
     }
 
     @Override

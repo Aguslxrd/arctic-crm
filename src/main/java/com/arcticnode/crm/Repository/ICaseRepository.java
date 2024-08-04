@@ -2,6 +2,8 @@ package com.arcticnode.crm.Repository;
 
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.CaseStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,7 +27,8 @@ public interface ICaseRepository extends JpaRepository<CaseEntity, Integer> {
                   @Param("caseStatus") CaseStatus caseStatus);
 
     @Query("SELECT c FROM CaseEntity c WHERE c.case_status IN :statuses")
-    List<CaseEntity> findByCaseStatusIn(@Param("statuses") List<CaseStatus> statuses);
+    Page<CaseEntity> findByCaseStatusIn(@Param("statuses") List<CaseStatus> statuses, Pageable pageable);
+
 
     List<CaseEntity> findByUserId(Integer userId);
 }

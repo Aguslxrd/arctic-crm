@@ -7,6 +7,8 @@ import com.arcticnode.crm.Services.ICaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,11 +72,14 @@ public class CaseController {
     }
 
     @GetMapping("/open-and-in-progress")
-    public ResponseEntity<List<CaseEntity>> getOpenAndInProgressCases() {
+    public ResponseEntity<Page<CaseEntity>> getOpenAndInProgressCases(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         List<CaseStatus> statuses = Arrays.asList(CaseStatus.ABIERTO, CaseStatus.EN_PROGRESO);
-        List<CaseEntity> cases = caseService.findByCaseStatusIn(statuses);
+        Page<CaseEntity> cases = caseService.findByCaseStatusIn(statuses, PageRequest.of(page, size));
         return new ResponseEntity<>(cases, HttpStatus.OK);
     }
+
 
     @GetMapping("/open-and-in-progress/{caseId}")
     public ResponseEntity<CaseEntity> getOpenAndInProgressCases(@PathVariable Integer caseId) {
