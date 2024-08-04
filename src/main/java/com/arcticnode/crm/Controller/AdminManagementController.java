@@ -10,6 +10,9 @@ import com.arcticnode.crm.Services.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -102,12 +105,12 @@ public class AdminManagementController {
     }
 
     @GetMapping("/logs")
-    public ResponseEntity<List<LoggingEntity>> getAllLogs() {
-        List<LoggingEntity> logs = loggingUtils.getLogs();
-        if (logs.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(logs);
+    public ResponseEntity<Page<LoggingEntity>> getAllLogs(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<LoggingEntity> logsPage = loggingUtils.getLogs(pageable);
+        return ResponseEntity.ok(logsPage); //testear
     }
 
 

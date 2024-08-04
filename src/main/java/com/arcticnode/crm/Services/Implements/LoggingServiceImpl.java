@@ -4,6 +4,8 @@ import com.arcticnode.crm.Entities.LoggingEntity;
 import com.arcticnode.crm.Repository.Admin.ILoggingRepository;
 import com.arcticnode.crm.Services.ILoggingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public class LoggingServiceImpl implements ILoggingService {
     }
 
     @Override
-    public List<LoggingEntity> getLogs() {
-        return logRepository.findAll();
+    public Page<LoggingEntity> getLogs(Pageable pageable) {
+        return logRepository.findAll(pageable);
     }
 }
