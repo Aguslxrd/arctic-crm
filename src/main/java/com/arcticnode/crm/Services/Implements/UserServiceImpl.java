@@ -82,7 +82,7 @@ public class UserServiceImpl implements IUserService {
         List<UserEntity> allUsers = iUserRepository.findAll();
 
         List<UserEntity> filteredUsers = allUsers.stream()
-                .filter(userEntity -> Boolean.FALSE.equals(userEntity.getSoftDelete()))
+                .filter(userEntity -> Boolean.TRUE.equals(userEntity.getSoftDelete()))
                 .collect(Collectors.toList());
 
         //indice para el inicio y el final de cada pagina
