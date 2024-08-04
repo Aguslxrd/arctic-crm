@@ -42,8 +42,8 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
     }
 
     @Override
-    public List<EnterpriseEntity> findAllBySoftDeleteTrue() {
-        return iEnterpriseRepository.findAllBySoftDeleteTrue();
+    public Page<EnterpriseEntity> findAllBySoftDeleteTrue(Pageable pageable) {
+        return iEnterpriseRepository.findAllBySoftDeleteTrue(pageable);
     }
 
     @Override

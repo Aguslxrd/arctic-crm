@@ -110,12 +110,12 @@ public class AdminManagementController {
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<LoggingEntity> logsPage = loggingUtils.getLogs(pageable);
-        return ResponseEntity.ok(logsPage); //testear
+        return ResponseEntity.ok(logsPage);
     }
 
 
     @GetMapping("/closedcases")
-    public ResponseEntity<List<CaseEntity>> getAllClosedCases() {
+    public ResponseEntity<List<CaseEntity>> getAllClosedCases() { //pagination to-do
         List<CaseEntity> closedCases = caseService.findAllClosedCases();
         if (closedCases.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -124,7 +124,7 @@ public class AdminManagementController {
     }
 
     @GetMapping("/softdeletedusers")
-    public ResponseEntity<List<UserEntity>> getAllSoftDeletedUsers() {
+    public ResponseEntity<List<UserEntity>> getAllSoftDeletedUsers() { //pagination to-do
         List<UserEntity> softDeletedUsers = userService.findAllSoftDeletedUsers();
         if (softDeletedUsers.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -133,14 +133,12 @@ public class AdminManagementController {
     }
 
     @GetMapping("/softdeletedenterprises")
-    public ResponseEntity<List<EnterpriseEntity>> getAllSoftDeletedEnterprises() {
-        List<EnterpriseEntity> softDeletedEnterprises = enterpriseService.findAllBySoftDeleteTrue();
-
-        if (softDeletedEnterprises.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return ResponseEntity.ok(softDeletedEnterprises);
+    public ResponseEntity<Page<EnterpriseEntity>> getAllSoftDeletedEnterprises(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<EnterpriseEntity> enterprisePages = enterpriseService.findAllBySoftDeleteTrue(pageable);
+        return ResponseEntity.ok(enterprisePages);
     }
 
     @PutMapping("/enterprises/activate/{enterpriseId}")

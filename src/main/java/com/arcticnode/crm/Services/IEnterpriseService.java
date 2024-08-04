@@ -20,7 +20,7 @@ public interface IEnterpriseService {
     @Transactional(readOnly = true)
     public Page<EnterpriseEntity> findAllBySoftDeleteFalse(Pageable pageable);
     @Transactional(readOnly = true)
-    public List<EnterpriseEntity> findAllBySoftDeleteTrue();
+    public Page<EnterpriseEntity> findAllBySoftDeleteTrue(Pageable pageable);
     public void deleteById(Integer enterpriseId);
     public void softDeleteById(Integer enterpriseId);
     @Transactional(readOnly = true)
