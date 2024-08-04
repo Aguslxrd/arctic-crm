@@ -1,6 +1,7 @@
 package com.arcticnode.crm.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,8 +31,12 @@ public class UserEnterpriseEntity {
     @JsonBackReference(value = "enterprise-userEnterprise")
     private EnterpriseEntity enterprise;
 
-    public UserEnterpriseEntity(Integer userId, Integer enterpriseId) {
-        this.id = new UserEnterpriseId(userId, enterpriseId);
+    @Override
+    public String toString() {
+        return "UserEnterpriseEntity{" +
+                "id=" + id +
+                ", userId=" + (user != null ? user.getUserid() : "null") +
+                ", enterpriseId=" + (enterprise != null ? enterprise.getEnterpriseid() : "null") +
+                '}';
     }
-
 }
