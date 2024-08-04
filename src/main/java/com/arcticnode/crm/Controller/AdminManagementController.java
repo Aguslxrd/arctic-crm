@@ -115,12 +115,12 @@ public class AdminManagementController {
 
 
     @GetMapping("/closedcases")
-    public ResponseEntity<List<CaseEntity>> getAllClosedCases() { //pagination to-do
-        List<CaseEntity> closedCases = caseService.findAllClosedCases();
-        if (closedCases.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(closedCases);
+    public ResponseEntity<Page<CaseEntity>> getAllClosedCases(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CaseEntity> casesPage = caseService.findAllClosedCases(pageable);
+        return ResponseEntity.ok(casesPage);
     }
 
     @GetMapping("/softdeletedusers")

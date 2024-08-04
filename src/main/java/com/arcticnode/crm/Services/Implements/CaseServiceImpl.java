@@ -6,6 +6,7 @@ import com.arcticnode.crm.Repository.ICaseRepository;
 import com.arcticnode.crm.Services.ICaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -60,11 +61,25 @@ public class CaseServiceImpl implements ICaseService {
     }
 
     @Override
-    public List<CaseEntity> findAllClosedCases() {
-        return iCaseRepository.findAll().stream().filter(caseEntity ->
-                caseEntity.getCase_status() == CaseStatus.CERRADO)
+    public Page<CaseEntity> findAllClosedCases(Pageable pageable) {
+        List<CaseEntity> allCases = iCaseRepository.findAll();
+
+        //filtros por casos cerrados
+        List<CaseEntity> closedCases = allCases.stream()
+                .filter(caseEntity -> caseEntity.getCase_status() == CaseStatus.CERRADO)
                 .collect(Collectors.toList());
+
+        //indices de la página actual
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), closedCases.size());
+
+        //sublista para la página actual
+        List<CaseEntity> pagedCases = closedCases.subList(start, end);
+
+        //pagina de casos cerrados
+        return new PageImpl<>(pagedCases, pageable, closedCases.size());
     }
+
 
     @Override
     public long countAllCases() {

@@ -17,7 +17,7 @@ public interface ICaseService {
 
     Page<CaseEntity> findByCaseStatusIn(List<CaseStatus> statuses, Pageable pageable);
     Optional<CaseEntity> findOpenOrInProgressCaseById(Integer caseId);
-    public List<CaseEntity> findAllClosedCases();
+    public Page<CaseEntity> findAllClosedCases(Pageable pageable);
 
     public long countAllCases();
 
