@@ -7,6 +7,8 @@ import com.arcticnode.crm.Services.IUserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,8 +37,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<UserEntity> findAllBySoftDeleteFalse() {
-        return iUserRepository.findAllBySoftDeleteFalse();
+    public Page<UserEntity> findAllBySoftDeleteFalse(Pageable pageable) {
+        return iUserRepository.findAllBySoftDeleteFalse(pageable);
     }
 
     @Override
