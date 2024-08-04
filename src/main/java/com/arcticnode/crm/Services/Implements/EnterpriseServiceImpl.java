@@ -8,6 +8,8 @@ import com.arcticnode.crm.Services.IEnterpriseService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,8 +37,8 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
     }
 
     @Override
-    public List<EnterpriseEntity> findAllBySoftDeleteFalse() {
-        return iEnterpriseRepository.findAllBySoftDeleteFalse();
+    public Page<EnterpriseEntity> findAllBySoftDeleteFalse(Pageable pageable) {
+        return iEnterpriseRepository.findAllBySoftDeleteFalse(pageable);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.arcticnode.crm.Repository;
 
 import com.arcticnode.crm.Entities.EnterpriseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +21,6 @@ public interface IEnterpriseRepository extends JpaRepository<EnterpriseEntity, I
     Optional<EnterpriseEntity> findByName_enterprise(@Param("name_enterprise") String name_enterprise);
 
     Optional<EnterpriseEntity> findByEmail(String email);
-    public List<EnterpriseEntity> findAllBySoftDeleteFalse();
+    public Page<EnterpriseEntity> findAllBySoftDeleteFalse(Pageable pageable);
     public List<EnterpriseEntity> findAllBySoftDeleteTrue();
 }
