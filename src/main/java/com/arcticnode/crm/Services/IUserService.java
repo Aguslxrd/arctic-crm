@@ -22,6 +22,6 @@ public interface IUserService {
     public Optional<UserEntity> findByEmail(String email);
     public Optional<UserEntity> findByPhone(String phone);
     public Optional<UserEntity> findByIdentifier(String identifier);
-    public List<UserEntity> findAllSoftDeletedUsers();
+    public Page<UserEntity> findAllSoftDeletedUsers(Pageable pageable);
     public Long countAllUsers();
 }

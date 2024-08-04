@@ -124,12 +124,12 @@ public class AdminManagementController {
     }
 
     @GetMapping("/softdeletedusers")
-    public ResponseEntity<List<UserEntity>> getAllSoftDeletedUsers() { //pagination to-do
-        List<UserEntity> softDeletedUsers = userService.findAllSoftDeletedUsers();
-        if (softDeletedUsers.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(softDeletedUsers);
+    public ResponseEntity<Page<UserEntity>> getAllSoftDeletedUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<UserEntity> usersPage = userService.findAllSoftDeletedUsers(pageable);
+        return ResponseEntity.ok(usersPage);
     }
 
     @GetMapping("/softdeletedenterprises")

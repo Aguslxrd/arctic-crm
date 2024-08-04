@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -77,10 +78,21 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<UserEntity> findAllSoftDeletedUsers() {
-        return iUserRepository.findAll().stream().filter(userEntity ->
-                        userEntity.getSoftDelete() == Boolean.FALSE)
+    public Page<UserEntity> findAllSoftDeletedUsers(Pageable pageable) {
+        List<UserEntity> allUsers = iUserRepository.findAll();
+
+        List<UserEntity> filteredUsers = allUsers.stream()
+                .filter(userEntity -> Boolean.FALSE.equals(userEntity.getSoftDelete()))
                 .collect(Collectors.toList());
+
+        //indice para el inicio y el final de cada pagina
+        int start = Math.toIntExact(pageable.getOffset());
+        int end = Math.min((start + pageable.getPageSize()), filteredUsers.size());
+
+        //sublista para la página actual
+        List<UserEntity> pagedUsers = filteredUsers.subList(start, end);
+
+        return new PageImpl<>(pagedUsers, pageable, filteredUsers.size());
     }
 
     @Override
