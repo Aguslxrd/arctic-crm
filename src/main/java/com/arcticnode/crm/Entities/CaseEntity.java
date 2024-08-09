@@ -22,6 +22,9 @@ public class CaseEntity {
     @Column(nullable = false)
     private Integer userId;
 
+    @Column(nullable = false)
+    private Integer authId;
+
     @Column(nullable = false, length = 100)
     private String title;
 

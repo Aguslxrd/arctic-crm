@@ -19,9 +19,10 @@ public interface ICaseRepository extends JpaRepository<CaseEntity, Integer> {
 
     @Transactional
     @Modifying
-    @Query("INSERT INTO CaseEntity (userId, title, description_case, case_status) " +
-            "VALUES (:userId, :title, :descriptionCase, :caseStatus)")
+    @Query("INSERT INTO CaseEntity (userId, authId, title, description_case, case_status) " +
+            "VALUES (:userId, :authId, :title, :descriptionCase, :caseStatus)")
     void saveCase(@Param("userId") Integer userId,
+                  @Param("authId") Integer authId,
                   @Param("title") String title,
                   @Param("descriptionCase") String descriptionCase,
                   @Param("caseStatus") CaseStatus caseStatus);
