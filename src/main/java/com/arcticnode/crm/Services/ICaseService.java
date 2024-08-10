@@ -1,5 +1,6 @@
 package com.arcticnode.crm.Services;
 
+import com.arcticnode.crm.Dto.CaseDTO;
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.CaseStatus;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,7 @@ public interface ICaseService {
     public List<CaseEntity> findAll();
     public Optional<CaseEntity> findById(Integer caseId);
 
-    public List<CaseEntity> findByUserId(Integer userId);
+    public List<CaseDTO> findByUserId(Integer userId);
 
     Page<CaseEntity> findByCaseStatusIn(List<CaseStatus> statuses, Pageable pageable);
     Optional<CaseEntity> findOpenOrInProgressCaseById(Integer caseId);

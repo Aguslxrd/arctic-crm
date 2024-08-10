@@ -1,5 +1,6 @@
 package com.arcticnode.crm.Controller;
 
+import com.arcticnode.crm.Dto.CaseDTO;
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.CaseStatus;
 import com.arcticnode.crm.LogUtils.LoggingUtils;
@@ -89,8 +90,8 @@ public class CaseController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<CaseEntity>> getCaseByUserId(@PathVariable Integer userId) {
-        List<CaseEntity> userCases = caseService.findByUserId(userId);
+    public ResponseEntity<List<CaseDTO>> getCaseByUserId(@PathVariable Integer userId) {
+        List<CaseDTO> userCases = caseService.findByUserId(userId);
         if (userCases.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

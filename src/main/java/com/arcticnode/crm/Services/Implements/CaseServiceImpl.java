@@ -1,7 +1,12 @@
 package com.arcticnode.crm.Services.Implements;
 
+import com.arcticnode.crm.Dto.CaseDTO;
+import com.arcticnode.crm.Dto.InteractionDto;
+import com.arcticnode.crm.Entities.AuthEntity;
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.CaseStatus;
+import com.arcticnode.crm.Entities.InteractionsEntity;
+import com.arcticnode.crm.Repository.Admin.IAuthRepository;
 import com.arcticnode.crm.Repository.ICaseRepository;
 import com.arcticnode.crm.Services.ICaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +26,8 @@ public class CaseServiceImpl implements ICaseService {
 
     @Autowired
     private ICaseRepository iCaseRepository;
+    @Autowired
+    private IAuthRepository iAuthRepository;
     @Override
     public CaseEntity saveCase(CaseEntity caseEntity) {
         if (caseEntity.getDate_created() == null) {
@@ -40,11 +47,12 @@ public class CaseServiceImpl implements ICaseService {
     }
 
     @Override
-    public List<CaseEntity> findByUserId(Integer userId) {
-
-        return iCaseRepository.findByUserId(userId).stream().filter(caseEntity ->
-                caseEntity.getCase_status() == CaseStatus.ABIERTO ||
-                caseEntity.getCase_status() == CaseStatus.EN_PROGRESO)
+    public List<CaseDTO> findByUserId(Integer userId) {
+        return iCaseRepository.findByUserId(userId).stream()
+                .filter(caseEntity ->
+                        caseEntity.getCase_status() == CaseStatus.ABIERTO ||
+                                caseEntity.getCase_status() == CaseStatus.EN_PROGRESO)
+                .map(this::convertToDto)  // Convertimos CaseEntity a CaseDTO
                 .collect(Collectors.toList());
     }
 
@@ -80,6 +88,24 @@ public class CaseServiceImpl implements ICaseService {
         return new PageImpl<>(pagedCases, pageable, closedCases.size());
     }
 
+    private CaseDTO convertToDto(CaseEntity caseEntity) {
+        return CaseDTO.builder()
+                .caseId(caseEntity.getCaseId())
+                .userId(caseEntity.getUserId())
+                .authId(caseEntity.getAuthId())
+                .adminName(getAdminNameById(caseEntity.getAuthId()))
+                .title(caseEntity.getTitle())
+                .description_case(caseEntity.getDescription_case())
+                .date_created(caseEntity.getDate_created())
+                .case_status(caseEntity.getCase_status())
+                .build();
+    }
+
+    public String getAdminNameById(Integer authId) {
+        return iAuthRepository.findById(authId)
+                .map(AuthEntity::getAdminName)
+                .orElse("Unknown");
+    }
 
     @Override
     public long countAllCases() {

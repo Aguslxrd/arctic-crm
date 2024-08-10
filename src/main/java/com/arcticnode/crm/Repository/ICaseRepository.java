@@ -1,5 +1,6 @@
 package com.arcticnode.crm.Repository;
 
+import com.arcticnode.crm.Dto.CaseDTO;
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.CaseStatus;
 import org.springframework.data.domain.Page;
