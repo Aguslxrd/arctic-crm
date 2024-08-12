@@ -13,7 +13,7 @@ public interface ICaseService {
     public CaseEntity saveCase(CaseEntity caseEntity);
     public List<CaseEntity> findAll();
     public Optional<CaseEntity> findById(Integer caseId);
-
+    public Optional<CaseDTO> findDtoById(Integer caseId);
     public List<CaseDTO> findByUserId(Integer userId);
 
     Page<CaseEntity> findByCaseStatusIn(List<CaseStatus> statuses, Pageable pageable);

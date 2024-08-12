@@ -44,8 +44,8 @@ public class CaseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CaseEntity> getCaseById(@PathVariable Integer id) {
-        return caseService.findById(id)
+    public ResponseEntity<CaseDTO> getCaseById(@PathVariable Integer id) {
+        return caseService.findDtoById(id)
                 .map(caseEntity -> new ResponseEntity<>(caseEntity, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

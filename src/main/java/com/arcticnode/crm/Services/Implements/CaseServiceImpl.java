@@ -46,13 +46,18 @@ public class CaseServiceImpl implements ICaseService {
         return iCaseRepository.findById(caseId);
     }
 
+    public Optional<CaseDTO> findDtoById(Integer caseId) {
+        return iCaseRepository.findById(caseId)
+                .map(this::convertToDto);
+    }
+
     @Override
     public List<CaseDTO> findByUserId(Integer userId) {
         return iCaseRepository.findByUserId(userId).stream()
                 .filter(caseEntity ->
                         caseEntity.getCase_status() == CaseStatus.ABIERTO ||
                                 caseEntity.getCase_status() == CaseStatus.EN_PROGRESO)
-                .map(this::convertToDto)  // Convertimos CaseEntity a CaseDTO
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
