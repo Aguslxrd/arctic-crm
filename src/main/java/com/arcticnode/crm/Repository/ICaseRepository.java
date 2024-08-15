@@ -1,7 +1,10 @@
 package com.arcticnode.crm.Repository;
 
+import com.arcticnode.crm.Dto.CaseDTO;
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.CaseStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,15 +20,17 @@ public interface ICaseRepository extends JpaRepository<CaseEntity, Integer> {
 
     @Transactional
     @Modifying
-    @Query("INSERT INTO CaseEntity (userId, title, description_case, case_status) " +
-            "VALUES (:userId, :title, :descriptionCase, :caseStatus)")
+    @Query("INSERT INTO CaseEntity (userId, authId, title, description_case, case_status) " +
+            "VALUES (:userId, :authId, :title, :descriptionCase, :caseStatus)")
     void saveCase(@Param("userId") Integer userId,
+                  @Param("authId") Integer authId,
                   @Param("title") String title,
                   @Param("descriptionCase") String descriptionCase,
                   @Param("caseStatus") CaseStatus caseStatus);
 
     @Query("SELECT c FROM CaseEntity c WHERE c.case_status IN :statuses")
-    List<CaseEntity> findByCaseStatusIn(@Param("statuses") List<CaseStatus> statuses);
+    Page<CaseEntity> findByCaseStatusIn(@Param("statuses") List<CaseStatus> statuses, Pageable pageable);
+
 
     List<CaseEntity> findByUserId(Integer userId);
 }

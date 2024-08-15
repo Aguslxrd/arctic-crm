@@ -1,6 +1,8 @@
 package com.arcticnode.crm.Services;
 
 import com.arcticnode.crm.Entities.UserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -14,11 +16,12 @@ public interface IUserService {
     @Transactional(readOnly = true)
     public List<UserEntity> findAll();
     @Transactional(readOnly = true)
-    public List<UserEntity> findAllBySoftDeleteFalse();
+    public Page<UserEntity> findAllBySoftDeleteFalse(Pageable pageable);
     public void deleteById(Integer userId);
     public void softDeleteById(Integer userId);
     public Optional<UserEntity> findByEmail(String email);
     public Optional<UserEntity> findByPhone(String phone);
     public Optional<UserEntity> findByIdentifier(String identifier);
-    public List<UserEntity> findAllSoftDeletedUsers();
+    public Page<UserEntity> findAllSoftDeletedUsers(Pageable pageable);
+    public Long countAllUsers();
 }

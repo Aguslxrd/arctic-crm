@@ -53,11 +53,13 @@ CREATE TABLE user_enterprise (
 CREATE TABLE cases (
     caseId INT PRIMARY KEY AUTO_INCREMENT,
     userId INT NOT NULL,
+    authId INT NOT NULL,
     title VARCHAR(100) NOT NULL,
     description_case TEXT,
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
     case_status ENUM('ABIERTO', 'EN_PROGRESO', 'CERRADO') DEFAULT 'ABIERTO',
-    FOREIGN KEY (userId) REFERENCES users(userId)
+    FOREIGN KEY (userId) REFERENCES users(userId),
+    FOREIGN KEY (authId) REFERENCES auth(id)
 );
 
 CREATE TABLE interactions (
@@ -87,13 +89,13 @@ VALUES
 (8, 1, 'Se han proporcionado las especificaciones detalladas del producto XYZ al cliente vía correo electrónico.'),
 (9, 1, 'El reembolso ha sido procesado y debería reflejarse en la cuenta del cliente en 3-5 días hábiles.');
 
-INSERT INTO cases (userId, title, description_case, case_status)
+INSERT INTO cases (authId, title, description_case, case_status, authId)
 VALUES 
-(1, 'Problema con facturación', 'El cliente reporta un error en su última factura.', 'ABIERTO'),
-(1, 'Solicitud de cambio de dirección', 'El cliente desea actualizar su dirección de envío.', 'EN_PROGRESO'),
-(2, 'Consulta sobre producto', 'El cliente tiene preguntas sobre las especificaciones del producto XYZ.', 'ABIERTO'),
-(3, 'Reembolso pendiente', 'El cliente solicita información sobre el estado de su reembolso.', 'CERRADO'),
-(2, 'Problema técnico con la aplicación', 'La aplicación móvil se cierra inesperadamente al intentar realizar un pago.', 'EN_PROGRESO');
+(2, 'Problema con facturación', 'El cliente reporta un error en su última factura.', 'ABIERTO', 2),
+(2, 'Solicitud de cambio de dirección', 'El cliente desea actualizar su dirección de envío.', 'EN_PROGRESO', 2),
+(2, 'Consulta sobre producto', 'El cliente tiene preguntas sobre las especificaciones del producto XYZ.', 'ABIERTO', 2),
+(2, 'Reembolso pendiente', 'El cliente solicita información sobre el estado de su reembolso.', 'CERRADO', 2),
+(2, 'Problema técnico con la aplicación', 'La aplicación móvil se cierra inesperadamente al intentar realizar un pago.', 'EN_PROGRESO', 2);
 
 
 INSERT INTO enterprise (name_enterprise, rut, address, phone, email, web_site)

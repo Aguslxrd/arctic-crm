@@ -2,6 +2,8 @@ package com.arcticnode.crm.Services;
 
 import com.arcticnode.crm.Entities.EnterpriseEntity;
 import com.arcticnode.crm.Entities.UserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +18,9 @@ public interface IEnterpriseService {
     @Transactional(readOnly = true)
     public List<EnterpriseEntity> findAll();
     @Transactional(readOnly = true)
-    public List<EnterpriseEntity> findAllBySoftDeleteFalse();
+    public Page<EnterpriseEntity> findAllBySoftDeleteFalse(Pageable pageable);
+    @Transactional(readOnly = true)
+    public Page<EnterpriseEntity> findAllBySoftDeleteTrue(Pageable pageable);
     public void deleteById(Integer enterpriseId);
     public void softDeleteById(Integer enterpriseId);
     @Transactional(readOnly = true)
@@ -26,4 +30,6 @@ public interface IEnterpriseService {
     @Transactional(readOnly = true)
     public Optional<EnterpriseEntity> findByName_enterprise(String name);
     public Optional<EnterpriseEntity> findByEmail(String enterprise_email);
+    public Long countAllEnterprises();
+    public Optional<EnterpriseEntity> activateEnterpriseById(Integer enterpriseId);
 }

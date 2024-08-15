@@ -9,6 +9,9 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +34,13 @@ public class UserController {
     private LoggingUtils logUtils;
 
     @GetMapping
-    public ResponseEntity<Iterable<UserEntity>> getAllActiveUsers(){
-        return ResponseEntity.ok(iUserService.findAllBySoftDeleteFalse());
+    public ResponseEntity<Page<UserEntity>> getAllActiveUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<UserEntity> usersPage = iUserService.findAllBySoftDeleteFalse(pageable);
+        return ResponseEntity.ok(usersPage);
     }
-
     @PostMapping
     public ResponseEntity<UserEntity> saveUser(@RequestBody UserEntity user) {
         if (user == null) {
@@ -96,6 +102,9 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
+    @GetMapping("/all")
+    public ResponseEntity<Long> countAllUsers() {
+        return ResponseEntity.ok(iUserService.countAllUsers());
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.arcticnode.crm.Entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,11 +11,12 @@ import java.util.Objects;
 
 @Embeddable
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserEnterpriseId implements Serializable {
-
+    @Column(name = "userid")
     private Integer userId;
-    private Integer enterpriseId;
 
+    @Column(name = "enterpriseid")
+    private Integer enterpriseId;
 }

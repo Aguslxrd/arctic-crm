@@ -1,5 +1,6 @@
 package com.arcticnode.crm.Controller;
 
+import com.arcticnode.crm.Dto.CaseDTO;
 import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.CaseStatus;
 import com.arcticnode.crm.LogUtils.LoggingUtils;
@@ -7,6 +8,8 @@ import com.arcticnode.crm.Services.ICaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +44,8 @@ public class CaseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CaseEntity> getCaseById(@PathVariable Integer id) {
-        return caseService.findById(id)
+    public ResponseEntity<CaseDTO> getCaseById(@PathVariable Integer id) {
+        return caseService.findDtoById(id)
                 .map(caseEntity -> new ResponseEntity<>(caseEntity, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -70,11 +73,14 @@ public class CaseController {
     }
 
     @GetMapping("/open-and-in-progress")
-    public ResponseEntity<List<CaseEntity>> getOpenAndInProgressCases() {
+    public ResponseEntity<Page<CaseEntity>> getOpenAndInProgressCases(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         List<CaseStatus> statuses = Arrays.asList(CaseStatus.ABIERTO, CaseStatus.EN_PROGRESO);
-        List<CaseEntity> cases = caseService.findByCaseStatusIn(statuses);
+        Page<CaseEntity> cases = caseService.findByCaseStatusIn(statuses, PageRequest.of(page, size));
         return new ResponseEntity<>(cases, HttpStatus.OK);
     }
+
 
     @GetMapping("/open-and-in-progress/{caseId}")
     public ResponseEntity<CaseEntity> getOpenAndInProgressCases(@PathVariable Integer caseId) {
@@ -84,13 +90,28 @@ public class CaseController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<CaseEntity>> getCaseByUserId(@PathVariable Integer userId) {
-        List<CaseEntity> userCases = caseService.findByUserId(userId);
+    public ResponseEntity<List<CaseDTO>> getCaseByUserId(@PathVariable Integer userId) {
+        List<CaseDTO> userCases = caseService.findByUserId(userId);
         if (userCases.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(userCases);
 
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Long> countAllCases() {
+        return ResponseEntity.ok(caseService.countAllCases());
+    }
+
+    @GetMapping("/all/opened")
+    public ResponseEntity<Long> countOpenedCases() {
+        return ResponseEntity.ok(caseService.countAllOpenedCases());
+    }
+
+    @GetMapping("/all/inprogress")
+    public ResponseEntity<Long> countInProgressCases() {
+        return ResponseEntity.ok(caseService.countAllInProgressCases());
     }
 
 }

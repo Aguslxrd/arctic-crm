@@ -5,6 +5,8 @@ import com.arcticnode.crm.Entities.LoggingEntity;
 import com.arcticnode.crm.Services.ILoggingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,9 +28,9 @@ public class LoggingUtils {
         }
     }
 
-    public List<LoggingEntity> getLogs() {
+    public Page<LoggingEntity> getLogs(Pageable pageable) {
         try {
-            return loggingService.getLogs();
+            return loggingService.getLogs(pageable);
         } catch (Exception e) {
             log.error("Error retrieving logs", e);
             return null;

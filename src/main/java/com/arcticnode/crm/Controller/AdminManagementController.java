@@ -4,29 +4,26 @@ import com.arcticnode.crm.Dto.AdminUserDTO;
 import com.arcticnode.crm.Dto.AuthResponse;
 import com.arcticnode.crm.Dto.RegisterRequest;
 import com.arcticnode.crm.Dto.UserRoleToChange;
-import com.arcticnode.crm.Entities.AuthEntity;
-import com.arcticnode.crm.Entities.CaseEntity;
-import com.arcticnode.crm.Entities.LoggingEntity;
-import com.arcticnode.crm.Entities.UserEntity;
+import com.arcticnode.crm.Entities.*;
 import com.arcticnode.crm.LogUtils.LoggingUtils;
-import com.arcticnode.crm.Services.IAdminManagementService;
-import com.arcticnode.crm.Services.IAuthService;
-import com.arcticnode.crm.Services.ICaseService;
-import com.arcticnode.crm.Services.IUserService;
+import com.arcticnode.crm.Services.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
-@Slf4j
 @CrossOrigin("http://localhost:4200")
 public class AdminManagementController {
 
@@ -41,6 +38,8 @@ public class AdminManagementController {
     private ICaseService caseService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IEnterpriseService enterpriseService;
 
     @PutMapping("/users/changerole")
     public ResponseEntity<AuthEntity> changeUserRole(@RequestBody UserRoleToChange userRoleToChange){
@@ -54,9 +53,13 @@ public class AdminManagementController {
     @PostMapping(value = "/users/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
 
-        log.info("register request {}", request);
+        if (request == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         loggingUtils.logAction("Nuevo usuario de administracion", "se creo usuario de administracion : " + request.getAdminname());
-        return ResponseEntity.ok(authService.register(request));
+        authService.register(request);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/users/{userId}")
@@ -79,7 +82,7 @@ public class AdminManagementController {
         List<AdminUserDTO> userDTOs = allUsers.stream()
                 .map(user -> AdminUserDTO.builder()
                         .userId(user.getId())
-                        .username(user.getUsername())
+                        .username(user.getAdminName())
                         .email(user.getEmail())
                         .role(String.valueOf(user.getUserrole()))
                         .build())
@@ -102,31 +105,52 @@ public class AdminManagementController {
     }
 
     @GetMapping("/logs")
-    public ResponseEntity<List<LoggingEntity>> getAllLogs() {
-        List<LoggingEntity> logs = loggingUtils.getLogs();
-        if (logs.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(logs);
+    public ResponseEntity<Page<LoggingEntity>> getAllLogs(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<LoggingEntity> logsPage = loggingUtils.getLogs(pageable);
+        return ResponseEntity.ok(logsPage);
     }
 
 
     @GetMapping("/closedcases")
-    public ResponseEntity<List<CaseEntity>> getAllClosedCases() {
-        List<CaseEntity> closedCases = caseService.findAllClosedCases();
-        if (closedCases.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(closedCases);
+    public ResponseEntity<Page<CaseEntity>> getAllClosedCases(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CaseEntity> casesPage = caseService.findAllClosedCases(pageable);
+        return ResponseEntity.ok(casesPage);
     }
 
     @GetMapping("/softdeletedusers")
-    public ResponseEntity<List<UserEntity>> getAllSoftDeletedUsers() {
-        List<UserEntity> softDeletedUsers = userService.findAllSoftDeletedUsers();
-        if (softDeletedUsers.isEmpty()){
+    public ResponseEntity<Page<UserEntity>> getAllSoftDeletedUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<UserEntity> usersPage = userService.findAllSoftDeletedUsers(pageable);
+        return ResponseEntity.ok(usersPage);
+    }
+
+    @GetMapping("/softdeletedenterprises")
+    public ResponseEntity<Page<EnterpriseEntity>> getAllSoftDeletedEnterprises(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<EnterpriseEntity> enterprisePages = enterpriseService.findAllBySoftDeleteTrue(pageable);
+        return ResponseEntity.ok(enterprisePages);
+    }
+
+    @PutMapping("/enterprises/activate/{enterpriseId}")
+    public ResponseEntity<EnterpriseEntity> activateEnterprise(@PathVariable Integer enterpriseId) {
+        Optional<EnterpriseEntity> activatedEnterprise = enterpriseService.activateEnterpriseById(enterpriseId);
+
+        if (activatedEnterprise.isPresent()) {
+            loggingUtils.logAction("Reactivación de empresa", "Se reactivó la empresa con ID: " + enterpriseId);
+            return ResponseEntity.ok(activatedEnterprise.get());
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(softDeletedUsers);
     }
 
 }

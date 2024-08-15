@@ -1,10 +1,13 @@
 package com.arcticnode.crm.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -29,4 +32,8 @@ public class UserEntity {
     private String identifier;
     @Column(name = "softDelete")
     private Boolean softDelete = false;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value = "user-userEnterprise")
+    private List<UserEnterpriseEntity> userEnterprises;
 }
