@@ -1,0 +1,39 @@
+version: '2.4'
+
+services:
+  app_crm:
+    build: crm
+    mem_limit: 512m
+    ports:
+      - "4300:4300"
+    environment:
+      DB_URL: jdbc:mysql://crm:3306/crm?createDatabaseIfNotExist=true&serverTimezone=UTC
+      DB_USER_NAME: root
+      DB_PASSWORD: mola123MOLA
+      SPRING_APPLICATION_NAME: crm
+      SERVER_PORT: 4300
+      SPRING_DATASOURCE_URL: jdbc:mysql://crm:3306/arctic_crm_db?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_DBNAME: arctic_crm_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: mola123MOLA
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
+      SPRING_JPA_HIBERNATE_NAMING_PHYSICAL_STRATEGY: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      SPRING_MVC_DISPATCH_OPTIONS_REQUEST: "true"
+    restart: always
+    depends_on:
+      crm:
+        condition: service_healthy
+  crm:
+    image: mysql:8.0.39
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mola123MOLA
+      MYSQL_PASSWORD: mola123MOLA
+      MYSQL_DATABASE: crm
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
