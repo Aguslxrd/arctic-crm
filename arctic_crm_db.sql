@@ -89,13 +89,13 @@ VALUES
 (8, 1, 'Se han proporcionado las especificaciones detalladas del producto XYZ al cliente vía correo electrónico.'),
 (9, 1, 'El reembolso ha sido procesado y debería reflejarse en la cuenta del cliente en 3-5 días hábiles.');
 
-INSERT INTO cases (authId, title, description_case, case_status, authId)
-VALUES 
-(2, 'Problema con facturación', 'El cliente reporta un error en su última factura.', 'ABIERTO', 2),
-(2, 'Solicitud de cambio de dirección', 'El cliente desea actualizar su dirección de envío.', 'EN_PROGRESO', 2),
-(2, 'Consulta sobre producto', 'El cliente tiene preguntas sobre las especificaciones del producto XYZ.', 'ABIERTO', 2),
-(2, 'Reembolso pendiente', 'El cliente solicita información sobre el estado de su reembolso.', 'CERRADO', 2),
-(2, 'Problema técnico con la aplicación', 'La aplicación móvil se cierra inesperadamente al intentar realizar un pago.', 'EN_PROGRESO', 2);
+INSERT INTO cases (authId, title, description_case, case_status)
+VALUES
+(2, 'Problema con facturación', 'El cliente reporta un error en su última factura.', 'ABIERTO'),
+(2, 'Solicitud de cambio de dirección', 'El cliente desea actualizar su dirección de envío.', 'EN_PROGRESO'),
+(2, 'Consulta sobre producto', 'El cliente tiene preguntas sobre las especificaciones del producto XYZ.', 'ABIERTO'),
+(2, 'Reembolso pendiente', 'El cliente solicita información sobre el estado de su reembolso.', 'CERRADO'),
+(2, 'Problema técnico con la aplicación', 'La aplicación móvil se cierra inesperadamente al intentar realizar un pago.', 'EN_PROGRESO');
 
 
 INSERT INTO enterprise (name_enterprise, rut, address, phone, email, web_site)
