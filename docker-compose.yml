@@ -1,39 +1,37 @@
-version: '2.4'
+version: '3.8'
 
 services:
-  app_crm:
+  mysql:
+    image: mysql:8.0
+    container_name: crm_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mola123MOLA
+      MYSQL_DATABASE: arctic_crm_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./arctic_crm_db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - crm_network
+
+  app:
     build: .
-    mem_limit: 512m
+    container_name: crm_app
     ports:
       - "4300:4300"
     environment:
-      DB_URL: jdbc:mysql://crm:3306/crm?createDatabaseIfNotExist=true&serverTimezone=UTC
-      DB_USER_NAME: root
-      DB_PASSWORD: mola123MOLA
-      SPRING_APPLICATION_NAME: crm
-      SERVER_PORT: 4300
-      SPRING_DATASOURCE_URL: jdbc:mysql://crm:3306/arctic_crm_db?useSSL=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_DBNAME: arctic_crm_db
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/arctic_crm_db?useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: mola123MOLA
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_DATASOURCE_PASSWORD: zackquack
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
-      SPRING_JPA_HIBERNATE_NAMING_PHYSICAL_STRATEGY: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      SPRING_MVC_DISPATCH_OPTIONS_REQUEST: "true"
-    restart: always
     depends_on:
-      crm:
-        condition: service_healthy
-  crm:
-    image: mysql:8.0.39
-    ports:
-      - "3307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: mola123MOLA
-      MYSQL_PASSWORD: mola123MOLA
-      MYSQL_DATABASE: crm
-    restart: always
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 10s
-      retries: 10
+      - mysql
+    networks:
+      - crm_network
+
+networks:
+  crm_network:
+
+volumes:
+  mysql_data:
