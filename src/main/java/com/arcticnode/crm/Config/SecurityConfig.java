@@ -42,7 +42,12 @@ public class SecurityConfig {
 
     private RequestMatcher publicEndPoints(){
         return new OrRequestMatcher(
-                new AntPathRequestMatcher("/api/auth/**")
+                new AntPathRequestMatcher("/api/auth/**"),
+                new AntPathRequestMatcher("/api-docs/**"),
+                new AntPathRequestMatcher("/swagger-ui/**"),
+                new AntPathRequestMatcher("/swagger-ui/index.html"),
+                new AntPathRequestMatcher("/swagger-ui.html"),
+                new AntPathRequestMatcher("/webjars/**")
         );
     }
 
