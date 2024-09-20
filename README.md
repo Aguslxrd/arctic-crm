@@ -20,13 +20,13 @@ El frontend está desarrollado con Angular y proporciona la interfaz de usuario 
 
 La documentación de la API está disponible en:
 
-- [Documentación Swagger](http://arcticnode.duckdns.org:4300/swagger-ui/index.html#/)
+- [Documentación Swagger](http://148.113.203.223:4300/swagger-ui/index.html#/)
 
 ## Demo de Prueba
 
 Puedes probar una demo de la aplicación en:
 
-- [Demo de prueba](http://arcticnode.duckdns.org)
+- [Demo de prueba](http://demo.arcticnode.com/login)
 
 ### Credenciales de Prueba
 
