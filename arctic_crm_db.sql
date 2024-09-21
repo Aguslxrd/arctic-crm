@@ -81,6 +81,16 @@ CREATE TABLE logging (
     FOREIGN KEY (user_id) REFERENCES auth(id)
 );
 
+CREATE TABLE case_tasks(
+    task_id INT PRIMARY KEY AUTO_INCREMENT,
+    caseId INT NOT NULL,
+    authId INT NOT NULL,
+    task_content VARCHAR(120) NOT NULL,
+    task_date DATETIME NOT NULL,
+    FOREIGN KEY (caseId) REFERENCES cases(caseId),
+    FOREIGN KEY (authId) REFERENCES auth(id)
+);
+
 INSERT INTO interactions (caseId, authId, interaction_text)
 VALUES 
 (6, 1, 'Se ha revisado la factura y se ha encontrado un error en el cálculo del IVA. Se procederá a emitir una factura corregida.'),
