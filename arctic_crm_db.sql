@@ -87,6 +87,7 @@ CREATE TABLE case_tasks(
     authId INT NOT NULL,
     task_content VARCHAR(120) NOT NULL,
     task_date DATETIME NOT NULL,
+    task_status ENUM('FINALIZADA', 'EN_PROGRESO', 'SIN_ASIGNAR') NOT NULL,
     FOREIGN KEY (caseId) REFERENCES cases(caseId),
     FOREIGN KEY (authId) REFERENCES auth(id)
 );

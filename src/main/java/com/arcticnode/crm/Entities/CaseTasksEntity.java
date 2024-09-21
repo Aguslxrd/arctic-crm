@@ -31,4 +31,8 @@ public class CaseTasksEntity {
     private String task_content;
 
     private LocalDateTime task_date;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "task_status")
+    private TaskStatus task_status;
 }
