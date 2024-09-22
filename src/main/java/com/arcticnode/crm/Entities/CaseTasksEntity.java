@@ -22,7 +22,7 @@ public class CaseTasksEntity {
     private Integer task_id;
 
     @Column(nullable = false)
-    private Integer userId;
+    private Integer caseId;
 
     @Column(nullable = false)
     private Integer authId;
