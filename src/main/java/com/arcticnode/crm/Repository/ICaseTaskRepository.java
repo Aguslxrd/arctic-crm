@@ -22,8 +22,8 @@ public interface ICaseTaskRepository extends JpaRepository<CaseTasksEntity, Inte
     @Modifying
     @Query("INSERT INTO CaseTasksEntity (caseId, authId, task_content, task_date, task_status) " +
             "VALUES (:caseId, :authId, :task_content, :task_date, :task_status)")
-    void saveTask(@Param("caseId") Integer caseId,
-                  @Param("authId") Integer authId,
+    void saveTask(@Param("caseId") int caseId,
+                  @Param("authId") int authId,
                   @Param("task_content") String task_content,
                   @Param("task_date") LocalDateTime task_date,
                   @Param("task_status") TaskStatus task_status);
@@ -31,7 +31,7 @@ public interface ICaseTaskRepository extends JpaRepository<CaseTasksEntity, Inte
     @Query("SELECT t FROM CaseTasksEntity t WHERE t.task_status IN :taskstatus")
     Page<CaseTasksEntity> findByCaseTasksStatusIn(@Param("taskstatus") List<TaskStatus> taskstatus, Pageable pageable);
 
-    List<CaseTasksEntity> findByAuthId(Integer authId);
+    List<CaseTasksEntity> findByAuthId(int authId);
 
-    List<CaseTasksEntity> findByCaseId(Integer caseId);
+    List<CaseTasksEntity> findByCaseId(int caseId);
 }
