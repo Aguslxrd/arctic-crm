@@ -1,6 +1,7 @@
 package com.arcticnode.crm.Services;
 
 import com.arcticnode.crm.Entities.CaseTasksEntity;
+import com.arcticnode.crm.Entities.TaskStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,5 +13,5 @@ public interface ICaseTaskService {
     public Optional<CaseTasksEntity> findById(int taskId);
     public List<CaseTasksEntity> findByAuthId(int authId);
     public List<CaseTasksEntity> findByCaseId(int caseId);
-    Page<CaseTasksEntity> findByCaseTasksStatusIn(List<CaseTasksEntity> statuses, Pageable pageable);
+    Page<CaseTasksEntity> findByCaseTasksStatusIn(List<TaskStatus> statuses, Pageable pageable);
 }
