@@ -1,5 +1,6 @@
 package com.arcticnode.crm.Services.Implements;
 
+import com.arcticnode.crm.Entities.CaseEntity;
 import com.arcticnode.crm.Entities.CaseStatus;
 import com.arcticnode.crm.Entities.CaseTasksEntity;
 import com.arcticnode.crm.Entities.TaskStatus;
@@ -51,6 +52,13 @@ public class CaseTaskServiceImpl implements ICaseTaskService {
     @Override
     public Page<CaseTasksEntity> findByCaseTasksStatusIn(List<TaskStatus> statuses, Pageable pageable) {
         return taskRepository.findByCaseTasksStatusIn(statuses, pageable);
+    }
+
+    public Optional<CaseTasksEntity> findTodoOrAsignedTask(Integer taskId) {
+        return taskRepository.findById(taskId).filter(tasksEntity ->
+                tasksEntity.getTask_status() == TaskStatus.SIN_ASIGNAR ||
+                        tasksEntity.getTask_status() == TaskStatus.EN_PROGRESO
+        );
     }
     //faltan tareas agregar metodo para tareas sin asignar o en progreso o finalizadas
 }
