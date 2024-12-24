@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface ICaseTaskService {
     public void saveTask(CaseTasksEntity task);
     public Optional<CaseTasksEntity> findById(int taskId);
+
+    public List<CaseTasksEntity> findAll();
     public List<CaseTasksEntity> findByAuthId(int authId);
     public List<CaseTasksEntity> findByCaseId(int caseId);
     Page<CaseTasksEntity> findByCaseTasksStatusIn(List<TaskStatus> statuses, Pageable pageable);

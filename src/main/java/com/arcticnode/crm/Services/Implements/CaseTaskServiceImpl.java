@@ -26,6 +26,11 @@ public class CaseTaskServiceImpl implements ICaseTaskService {
     }
 
     @Override
+    public List<CaseTasksEntity> findAll() {
+        return taskRepository.findAll();
+    }
+
+    @Override
     public Optional<CaseTasksEntity> findById(int taskId) {
         return taskRepository.findById(taskId);
     }
