@@ -8,6 +8,7 @@ import com.arcticnode.crm.Repository.ICaseTaskRepository;
 import com.arcticnode.crm.Services.ICaseTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -54,11 +55,56 @@ public class CaseTaskServiceImpl implements ICaseTaskService {
         return taskRepository.findByCaseTasksStatusIn(statuses, pageable);
     }
 
+    @Override
     public Optional<CaseTasksEntity> findTodoOrAsignedTask(Integer taskId) {
         return taskRepository.findById(taskId).filter(tasksEntity ->
                 tasksEntity.getTask_status() == TaskStatus.SIN_ASIGNAR ||
                         tasksEntity.getTask_status() == TaskStatus.EN_PROGRESO
         );
     }
-    //faltan tareas agregar metodo para tareas sin asignar o en progreso o finalizadas
+
+    @Override
+    public Page<CaseTasksEntity> findAllClosedTasks(Pageable pageable) {
+        List<CaseTasksEntity> allTasks = taskRepository.findAll();
+
+        //filtros por tareas terminadas
+        List<CaseTasksEntity> closedTasks = allTasks.stream()
+                .filter(tasksEntity -> tasksEntity.getTask_status() == TaskStatus.FINALIZADA)
+                .collect(Collectors.toList());
+
+        //indices de la página actual
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), closedTasks.size());
+
+        //sublista para la página actual
+        List<CaseTasksEntity> pagedTasks = closedTasks.subList(start, end);
+
+        //pagina de casos cerrados
+        return new PageImpl<>(pagedTasks, pageable, closedTasks.size());
+    }
+
+    @Override
+    public long countAllTasks() {
+        return taskRepository.findAll().stream()
+                .filter(tasksEntity ->
+                        tasksEntity.getTask_status() == TaskStatus.EN_PROGRESO ||
+                                tasksEntity.getTask_status() == TaskStatus.SIN_ASIGNAR)
+                .count();
+    }
+
+    @Override
+    public long countAllInProgressTasks() {
+        return taskRepository.findAll().stream()
+                .filter(tasksEntity -> tasksEntity.getTask_status() == TaskStatus.EN_PROGRESO)
+                .count();
+    }
+
+    @Override
+    public long countAllClosedTasks() {
+        return taskRepository.findAll().stream()
+                .filter(tasksEntity -> tasksEntity.getTask_status() == TaskStatus.FINALIZADA)
+                .count();
+    }
+
+
 }

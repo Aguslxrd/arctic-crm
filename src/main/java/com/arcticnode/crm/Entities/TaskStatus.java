@@ -1,7 +1,7 @@
 package com.arcticnode.crm.Entities;
 
 public enum TaskStatus {
-    FINALIZDA,
+    FINALIZADA,
     EN_PROGRESO,
     SIN_ASIGNAR
 }
