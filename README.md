@@ -20,18 +20,18 @@ El frontend está desarrollado con Angular y proporciona la interfaz de usuario 
 
 La documentación de la API está disponible en:
 
-- [Documentación Swagger](http://148.113.203.223:4300/swagger-ui/index.html#/)
+- [Documentación Swagger](https://democrm-api.damiansuffo.com/swagger-ui/index.html#/)
 
 ## Demo de Prueba
 
 Puedes probar una demo de la aplicación en:
 
-- [Demo de prueba](http://demo.arcticnode.com/login)
+- [Demo de prueba](https://demo-crm.damiansuffo.com)
 
 ### Credenciales de Prueba
 
 Para acceder a la demo, usa las credenciales de prueba que se encuentran en mi 
-[portfolio](https://damiansuffo.vercel.app):
+[portfolio](https://damiansuffo.com):
 
 ## Web de ArcticNode
 
